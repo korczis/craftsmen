@@ -1,0 +1,100 @@
+//Google Fonts
+//Open Sans
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=latin,latin-ext);
+
+//variables
+$primary-color: #ffffff;
+$secondary-color: #01203c;
+$primary-font: 'Open Sans', sans-serif;
+
+body {
+  background: transparent;
+  font-family: $primary-font;
+}
+
+html {
+  background: url('../img/homepage-bg.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  background-color: $secondary-color;
+
+}
+
+#homepage {
+  color: $primary-color;
+
+  a {
+    text-decoration: none;
+    padding-bottom: 0.05em;
+    color: $primary-color;
+
+    &:hover {
+      color: transparentize($primary-color, 0.25);
+    }
+
+    &:active, &:visited {
+      color: $primary-color;
+    }
+  }
+
+  .header {
+    .logo {
+      font-size: 2em;
+      padding: 1em;
+      //      background-color: red;
+      display: inline-block;
+      float: left;
+    }
+
+    .menu {
+      font-size: 1.5em;
+      float: right;
+      margin-top: 1.7em;
+
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+
+      li {
+        display: inline;
+        margin-left: 1.5em;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  .hero-message {
+    color: $primary-color;
+    margin: 0 auto;
+    margin-top: 2em;
+    max-width: 1000px;
+    font-size: 6em;
+    text-transform: uppercase;
+    text-align: center;
+
+    .light {
+      font-weight: 300;
+    }
+
+    .action {
+      font-weight: 400;
+      border-bottom: solid 0.09em $primary-color;
+
+      &:hover {
+        border-bottom: solid 0.09em transparentize($primary-color, 0.25);
+      }
+    }
+
+    .strong {
+      font-weight: 700;
+    }
+  }
+
+}

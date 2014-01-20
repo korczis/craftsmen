@@ -1,0 +1,57 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=latin,latin-ext);
+body {
+  background: transparent;
+  font-family: "Open Sans", sans-serif; }
+
+html {
+  background: url("../img/homepage-bg.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: #01203c; }
+
+#homepage {
+  color: white; }
+  #homepage a {
+    text-decoration: none;
+    padding-bottom: 0.05em;
+    color: white; }
+    #homepage a:hover {
+      color: rgba(255, 255, 255, 0.75); }
+    #homepage a:active, #homepage a:visited {
+      color: white; }
+  #homepage .header .logo {
+    font-size: 2em;
+    padding: 1em;
+    display: inline-block;
+    float: left; }
+  #homepage .header .menu {
+    font-size: 1.5em;
+    float: right;
+    margin-top: 1.7em; }
+    #homepage .header .menu ul {
+      margin: 0;
+      padding: 0; }
+    #homepage .header .menu li {
+      display: inline;
+      margin-left: 1.5em; }
+      #homepage .header .menu li:first-child {
+        margin-left: 0; }
+  #homepage .hero-message {
+    color: white;
+    margin: 0 auto;
+    margin-top: 2em;
+    max-width: 1000px;
+    font-size: 6em;
+    text-transform: uppercase;
+    text-align: center; }
+    #homepage .hero-message .light {
+      font-weight: 300; }
+    #homepage .hero-message .action {
+      font-weight: 400;
+      border-bottom: solid 0.09em white; }
+      #homepage .hero-message .action:hover {
+        border-bottom: solid 0.09em rgba(255, 255, 255, 0.75); }
+    #homepage .hero-message .strong {
+      font-weight: 700; }

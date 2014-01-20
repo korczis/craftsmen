@@ -2,6 +2,10 @@
 
 Simple Craftsmen Listing based on top of microscratch
 
+## Preview
+
+![image](https://raw2.github.com/pavelbinar/craftsmen/homepage/preview.png)
+
 ## Project Status
 
 [![Build Status](https://travis-ci.org/korczis/microscratch.png?branch=master)](https://travis-ci.org/korczis/microscratch)

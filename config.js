@@ -28,7 +28,7 @@
     module.exports = {
 
         _global: {
-            appName: "MicroScratch",
+            appName: "Craftsmen",
 
             verbose: true,
             mongo: {

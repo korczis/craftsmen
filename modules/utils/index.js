@@ -45,6 +45,23 @@
         return merge(true, glob, loc);
     };
 
+    module.exports.setObjectProperty = function (obj, prop, value) {
+        if (typeof prop === "string") {
+            prop = prop.split(".");
+        }
+
+        if (prop.length > 1) {
+            var e = prop.shift();
+            module.exports.setObjectProperty(obj[e] =
+                Object.prototype.toString.call(obj[e]) === "[object Object]"
+                    ? obj[e]
+                    : {},
+                prop,
+                value);
+        } else {
+            obj[prop[0]] = value;
+        }
+    };
 
     /**
      * Returns formatted time as timestamp

@@ -50,7 +50,8 @@
 
         app.get('/query', function(req, res) {
             var col = microscratch.mongo.getCollection('datasets').then(function(coll) {
-                coll.find().limit(10).toArray(function (err, data) {
+                var q = req.query.q || "";
+                coll.find({'value.data.name': new RegExp(q, "i")}).limit(10).toArray(function (err, data) {
                    res.json(data);
                 });
             });

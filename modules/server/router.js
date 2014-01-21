@@ -44,6 +44,15 @@
             res.render("index", data);
         });
 
+        // Root route
+        app.get('/search', function (req, res) {
+            var data = {
+                appName: microscratch.config.appName
+            };
+
+            res.render("search", data);
+        });
+
         app.get('/config', function (req, res) {
             res.json(microscratch.config);
         });

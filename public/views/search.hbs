@@ -42,6 +42,9 @@
                 <li>Result 8</li>
                 <li>Result 9</li>
                 <li>Result 10</li>
+                {{#each resutls}}
+                    <li>{{name}}</li>
+                {{/each}}
             </ul>
         </div>
     </div>
@@ -62,7 +65,7 @@
             {
                 name: "Test"
             }
-        ])
+        ]).property()
     });
 </script>
 

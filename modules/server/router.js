@@ -61,7 +61,7 @@
             var col = microscratch.mongo.getCollection('datasets').then(function(coll) {
                 var q = req.query.q || "";
                 q = q.replace(" ", ".*");
-                
+
                 coll.find({'value.data.name': new RegExp(q, "i")}).limit(10).toArray(function (err, data) {
                    res.json(data);
                 });

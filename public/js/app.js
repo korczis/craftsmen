@@ -37,7 +37,9 @@
         socket: null,
 
         initialize: function () {
-        }
+        },
+
+        results: []
     });
 
     App.initialize();

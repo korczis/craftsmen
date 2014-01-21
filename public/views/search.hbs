@@ -29,6 +29,21 @@
                 </div>
             </form>
         </div>
+
+        <div class="row">
+            <ul>
+                <li>Result 1</li>
+                <li>Result 2</li>
+                <li>Result 3</li>
+                <li>Result 4</li>
+                <li>Result 5</li>
+                <li>Result 6</li>
+                <li>Result 7</li>
+                <li>Result 8</li>
+                <li>Result 9</li>
+                <li>Result 10</li>
+            </ul>
+        </div>
     </div>
 </script>
 
@@ -40,5 +55,16 @@
 
 <!-- Application main script -->
 <script src="/js/app.js"></script>
+
+<script type="text/javascript">
+    App.ApplicationController = Ember.Controller.extend({
+        results: Ember.A([
+            {
+                name: "Test"
+            }
+        ])
+    });
+</script>
+
 </body>
 </html>

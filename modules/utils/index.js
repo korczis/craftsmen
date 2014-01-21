@@ -45,6 +45,12 @@
         return merge(true, glob, loc);
     };
 
+    /**
+     * Sets objects property by name (dot nototation)
+     * @param obj Object to be updated
+     * @param prop Propert name in dot notation
+     * @param value Value
+     */
     module.exports.setObjectProperty = function (obj, prop, value) {
         if (typeof prop === "string") {
             prop = prop.split(".");

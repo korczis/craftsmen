@@ -49,7 +49,11 @@
         });
 
         app.get('/query', function(req, res) {
-            microscratch.mongo.getCollection('datasets');
+            var col = microscratch.mongo.getCollection('datasets').then(function(coll) {
+                coll.find().limit(10).toArray(function (err, data) {
+                   res.json(data);
+                });
+            });
         });
     };
 

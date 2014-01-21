@@ -111,7 +111,7 @@
         return d.promise();
     };
 
-    exports.prototype.getCollectio = function(collectionName) {
+    exports.prototype.getCollection = function(collectionName) {
         if (this.config.verbose) {
             console.log("Loading collection '" + collectionName + "'");
         }

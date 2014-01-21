@@ -24,7 +24,8 @@
     'use strict';
 
     var deferred = require('deferred'),
-        mongodb = require('mongodb');
+        mongodb = require('mongodb')
+        mongoose = require('mongoose');
 
     /**
      * Mongo wrapper

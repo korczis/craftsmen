@@ -32,7 +32,7 @@
 
             verbose: true,
             mongo: {
-                uri: "mongodb://localhost:27017/apollo"
+                uri: "mongodb://localhost:27017/data"
             },
 
             server: {

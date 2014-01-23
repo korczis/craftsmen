@@ -1,4 +1,4 @@
-﻿/*
+/*
  Copyright, 2013, by Tomas Korcak. <korczis@gmail.com>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,38 +23,27 @@
 (function () {
     'use strict';
 
-    var deferred = require('deferred'),
-        fs = require('fs'),
+    var fs = require('fs'),
         path = require('path'),
-        utils = require('../utils');
+        utils = require('../../utils');
 
-    /**
-     * Intializes router
-     * @param microscratch Microscratch app which this router belongs to
-     * @param app Express app which this router belongs to
-     */
-    module.exports.initialize = function (microscratch, app) {
-        var d = deferred();
+    var exports = module.exports = function (microscratch, app) {
 
-        var readdir = deferred.promisify(fs.readdir);
+        // Root route
+        app.get('/', function (req, res) {
+            var data = {
+                appName: microscratch.config.appName
+            };
 
-        var self = this;
-        var routesDir = path.join(__dirname, './routes');
-        readdir(routesDir).then(function(files) {
-            console.log(files);
-
-            for(var i = 0; i < files.length; i++) {
-                var routePath = "./routes/" + files[i];
-
-                var route = require(routePath);
-                route(microscratch, app);
-            }
-
-            d.resolve(self);
+            var tmpl = path.join(microscratch.config.server.dirs.views, "index.hbs");
+            fs.exists(tmpl, function (exists) {
+                if (exists) {
+                    res.render("index", data);
+                } else {
+                    res.render("microscratch", data);
+                }
+            });
         });
-
-        return d.promise();
-        
     };
 
 }());

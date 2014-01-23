@@ -39,6 +39,12 @@ Install npm modules.
 Craftsmen listing
 ```
 
+Install bower components.
+
+```
+bower install
+```
+
 Run tests.
 
 ```

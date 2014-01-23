@@ -20,48 +20,54 @@
  THE SOFTWARE.
  */
 
-(function () {
-    var generateUUID = function () {
-        var d = new Date().getTime();
-        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = (d + Math.random() * 16) % 16 | 0;
-            d = Math.floor(d / 16);
-            return (c === 'x' ? r : (r & 0x7 | 0x8)).toString(16);
+(function (global) {
+    define(["jquery", "handlebars", "ember", "socketio", "exports"], function ($, handlebars, Ember, io, exports) {
+        var generateUUID = function () {
+            var d = new Date().getTime();
+            var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = (d + Math.random() * 16) % 16 | 0;
+                d = Math.floor(d / 16);
+                return (c === 'x' ? r : (r & 0x7 | 0x8)).toString(16);
+            });
+            return uuid;
+        };
+
+        var App = window.App = Ember.Application.create({
+            options: {},
+
+            socket: null,
+
+            initialize: function () {
+            },
+
+            results: []
         });
-        return uuid;
-    };
 
-    var App = window.App = Ember.Application.create({
-        options: {},
+        $(document).ready(function () {
+            var i = 0,
+                words = [
+                    'love',
+                    'scrape',
+                    'clean',
+                    'organize',
+                    'distribute',
+                    '$ell'
+                ];
 
-        socket: null,
+            $('#changeOnClick').click(function () {
+                i++;
+                $(this).text(words[i]);
+                if (i == words.length) {
+                    i = 0;
+                    $(this).text(words[0]);
+                }
+            });
+        });
 
-        initialize: function () {
-        },
+        exports.App = App;
+        global.App = App;
 
-        results: []
+        return App;
     });
 
-    App.initialize();
-}());
-
-$(document).ready(function () {
-    var i = 0,
-        words = [
-            'love',
-            'scrape',
-            'clean',
-            'organize',
-            'distribute',
-            '$ell'
-        ];
-
-    $('#changeOnClick').click(function () {
-        i++;
-        $(this).text(words[i]);
-        if (i == words.length) {
-            i = 0;
-            $(this).text(words[0]);
-        }
-    });
-});
+})(this);

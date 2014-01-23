@@ -51,6 +51,15 @@
             res.render("microscratch", data);
         });
 
+        // Microscratch route
+        app.get('/mocha', function (req, res) {
+            var data = {
+                appName: microscratch.config.appName
+            };
+
+            res.render("mocha", data);
+        });
+
         app.get('/config', function (req, res) {
             res.json(microscratch.config);
         });

@@ -22,7 +22,7 @@
 
 //*
 define({
-    appName: "MicroScratch",
+    appName: "Craftsmen",
     shim: {
         "bootstrap": {
             deps: ["jquery"]

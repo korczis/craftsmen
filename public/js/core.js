@@ -1,4 +1,4 @@
-/*
+﻿/*
  Copyright, 2013, by Tomas Korcak. <korczis@gmail.com>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,42 +20,10 @@
  THE SOFTWARE.
  */
 
-//*
-define({
-    app_name: "microscratch",
-    shim: {
-        "bootstrap": {
-            deps: ["jquery"]
-        },
-        "ember": {
-            deps: ["handlebars", "jquery"],
-            exports: "Ember"
-        },
-        'jquery': {
-            exports: '$'
-        },
-        'mocha': {
-            exports: "mocha"
-        },
-        'socketio': {
-            exports: 'io'
-        },
-        'chai-jquery': {
-            deps: ['jquery', 'chai']
+(function (global) {
+    // See https://github.com/zeflasher/ember-require-js/blob/master/app/js/main.js
+    require(['../app/lib.js'], function () {
         }
-    },
-    paths: {
-        "config": "/js/config",
-        "app": "/app/app",
-        "lib": "/app/lib",
-        "bootstrap": "/components/bootstrap/dist/js/bootstrap",
-        "ember": "/components/ember/ember",
-        "handlebars": "/components/handlebars/handlebars",
-        "jquery": "/components/jquery/jquery",
-        "mocha": "/components/mocha/mocha",
-        "chai": "/components/chai/chai",
-        "chai-jquery": "/components/chai-jquery/chai-jquery",
-        "socketio": "/components/socket.io-client/dist/socket.io"
-    }
-});
-//*/
+    );
+
+})(this);

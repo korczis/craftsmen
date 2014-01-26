@@ -20,42 +20,34 @@
  THE SOFTWARE.
  */
 
-//*
-define({
-    app_name: "microscratch",
-    shim: {
-        "bootstrap": {
-            deps: ["jquery"]
-        },
-        "ember": {
-            deps: ["handlebars", "jquery"],
-            exports: "Ember"
-        },
-        'jquery': {
-            exports: '$'
-        },
-        'mocha': {
-            exports: "mocha"
-        },
-        'socketio': {
-            exports: 'io'
-        },
-        'chai-jquery': {
-            deps: ['jquery', 'chai']
+(function (global) {
+    require
+    (
+        ["ember", "app"], function (Ember, App) {
+
+            App.ApplicationRoute = Ember.Route.extend({
+                title: "Microscratch",
+
+                model: function() {
+                },
+
+                setupController: function(controller, model) {
+                }
+            });
+
+            App.ApplicationView = Ember.View.extend({
+                classNames: ['app-view'],
+                templateName: "index",
+
+                /**
+                 * Called when inserted to DOM.
+                 * @memberof Application.ApplicationView
+                 * @instance
+                 */
+                didInsertElement: function () {
+                    console.log("App.ApplicationView.didInsertElement()");
+                }
+            });
         }
-    },
-    paths: {
-        "config": "/js/config",
-        "app": "/app/app",
-        "lib": "/app/lib",
-        "bootstrap": "/components/bootstrap/dist/js/bootstrap",
-        "ember": "/components/ember/ember",
-        "handlebars": "/components/handlebars/handlebars",
-        "jquery": "/components/jquery/jquery",
-        "mocha": "/components/mocha/mocha",
-        "chai": "/components/chai/chai",
-        "chai-jquery": "/components/chai-jquery/chai-jquery",
-        "socketio": "/components/socket.io-client/dist/socket.io"
-    }
-});
-//*/
+    );
+})(this);

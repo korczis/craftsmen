@@ -24,6 +24,7 @@
     'use strict';
 
     var deferred = require('deferred'),
+        logger = require('../logger'),
         mongodb = require('mongodb'),
         mongoose = require('mongoose');
 
@@ -67,12 +68,11 @@
 
         MongoClient.connect(this.config.mongo.uri, function (err, db) {
             if (err) {
-                d.reject(new Error("Cannot connect to DB '" + self.config.mongo.uri + "'"));
-                return;
+                throw new Error("Cannot connect to DB '" + self.config.mongo.uri + "'");
             }
 
             if (self.config.verbose) {
-                console.log("Connected to DB '" + self.config.mongo.uri + "'");
+                logger.log("Connected to DB '" + self.config.mongo.uri + "'");
             }
 
             self.db = db;
@@ -91,7 +91,7 @@
         var d = deferred();
 
         if (this.config.verbose) {
-            console.log("Loading collection '" + collectionName + "'");
+            logger.log("Loading collection '" + collectionName + "'");
         }
 
 
@@ -117,9 +117,9 @@
      * @param collectionName
      * @returns {*}
      */
-    exports.prototype.getCollection = function(collectionName) {
+    exports.prototype.getCollection = function (collectionName) {
         if (this.config.verbose) {
-            console.log("Loading collection '" + collectionName + "'");
+            logger.log("Loading collection '" + collectionName + "'");
         }
 
         var collection = this.db.collection(collectionName);
@@ -138,7 +138,7 @@
         this.connect().then(function (res) {
             var opt = self.config.mongo.watcher;
 
-            if(opt !== null && opt !== undefined && opt.toString() === "true" || opt.toString() === "1") {
+            if (opt !== null && opt !== undefined && opt.toString() === "true" || opt.toString() === "1") {
                 var Watcher = require('./watcher.js');
                 self.watcher = new Watcher(self);
 

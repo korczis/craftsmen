@@ -1,4 +1,4 @@
-/*
+﻿/*
  Copyright, 2013, by Tomas Korcak. <korczis@gmail.com>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,28 +23,11 @@
 (function () {
     'use strict';
 
-    var deferred = require('deferred'),
-        fs = require('fs'),
-        path = require('path'),
-        utils = require('../utils');
-
-    var Reloader = function () {
-        var Server = require('./index.js');
-
-        this.config = utils.loadConfig(path.join(__dirname, "../../config.js"));
-
-        this.app = new Server(this.config);
-
-        this.queue = this.app.initialize();
+    /**
+     * Core Module
+     * @type {CoreModule}
+     */
+    var exports = module.exports = function CoreModule() {
     };
 
-    Reloader.prototype.config = null;
-
-    Reloader.prototype.app = null;
-
-    Reloader.prototype.queue = null;
-
-    var reloader = new Reloader();
-
-    module.exports = reloader.app.app;
 }());

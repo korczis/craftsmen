@@ -17,11 +17,19 @@
     </div>
 
     <div class="row">
-        <ul>
         {{#each controller.results}}
-            <li>{{value.data.name}}</li>
+            <hr/>
+            <div>
+            {{#with value.data}}
+                <div><strong>{{name}}</strong></div>
+                <div>{{description}}</div>
+                <div>
+                    <span>{{address.street}}, {{address.city}}</span>
+                </div>
+                <div>{{createdAt}}<span>{{datetime createdAt}}</span></div>
+            {{/with}}
+            </div>
         {{/each}}
-        </ul>
     </div>
 </div>
 

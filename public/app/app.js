@@ -29,7 +29,9 @@
 
             initialize: function () {
 
-            }
+            },
+
+            config: config
         });
 
         exports.App = App;

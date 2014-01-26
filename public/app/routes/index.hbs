@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-<h1 class="text-center">Microscratch</h1>
+        <h1 class="text-center">{{App.config.appName}}</h1>
     </div>
 
     <div class="row">
@@ -18,19 +18,9 @@
 
     <div class="row">
         <ul>
-            <li>Result 1</li>
-            <li>Result 2</li>
-            <li>Result 3</li>
-            <li>Result 4</li>
-            <li>Result 5</li>
-            <li>Result 6</li>
-            <li>Result 7</li>
-            <li>Result 8</li>
-            <li>Result 9</li>
-            <li>Result 10</li>
-            {{#each resutls}}
-                <li>{{name}}</li>
-            {{/each}}
+        {{#each controller.results}}
+            <li>{{value.data.name}}</li>
+        {{/each}}
         </ul>
     </div>
 </div>

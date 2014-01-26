@@ -74,6 +74,10 @@
 
                 },
 
+                searchAsYouTypeHandler: function() {
+                    this.updateResults();
+                }.observes('query.q'),
+
                 actions: {
                     search: function() {
                         this.updateResults();

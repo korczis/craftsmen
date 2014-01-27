@@ -28,11 +28,13 @@ module.exports = function (grunt) {
         templatesDir = "./public/app/";
 
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-ember-templates');
-    grunt.loadNpmTasks('grunt-express');
+
+    grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-neuter');
 
     grunt.initConfig({
@@ -84,6 +86,7 @@ module.exports = function (grunt) {
             }
         },
 
+        // FIXME: Grunt task requirejs is not working!
         requirejs: {
             compile: {
                 options: {
@@ -93,6 +96,49 @@ module.exports = function (grunt) {
                     name: "js/main.js"
                 }
             }
+        },
+
+        jsdoc: {
+            client: {
+                src: [
+                    "./public/app/**/*.js"
+                ],
+                dest: "./public/doc/client/"
+            },
+            server: {
+                src: [
+                    "./app.js",
+                    "./modules/**/*.js"
+                ],
+                dest: "./public/doc/server/"
+            }
+        },
+
+        jshint: {
+            options: {
+                curly: true,
+                eqeqeq: true,
+                eqnull: true,
+                browser: true,
+                globals: {
+                    jQuery: true,
+                    next: true,
+                    require: true
+                }
+            },
+            client: [
+                "public/client/**/*.js"
+            ],
+            grunt: [
+                "Gruntfile.js"
+            ],
+            server: [
+                "app.js",
+                "modules/**/*.js"
+            ],
+            tests: [
+                "tests/**/*.js"
+            ]
         },
 
         less: {
@@ -126,6 +172,11 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
        'less',
         'emberTemplates'
+    ]);
+
+    // Generate documentation
+    grunt.registerTask('doc', [
+        'jsdoc'
     ]);
 
     grunt.registerTask('server', [

@@ -84,13 +84,13 @@ Simple Craftsmen Listing based on top of microscratch
   
   ```
   # Install grunt and bower
-  sudo npm install -g grunt grunt-cli bower
+  sudo npm install -g bower mocha mocha-phantomjs phantomjs grunt grunt-cli forever jsdoc@3.2.1
   
   # Clone repository
   git clone http://github.com/korczis/microscratch.git
   
   # Install required node modules
-  npm install
+  npm install --dev
   
   # Install required bower modules
   bower install

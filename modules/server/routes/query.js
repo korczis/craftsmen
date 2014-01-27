@@ -33,6 +33,7 @@
                         delete item.value.data.profileUrl;
                         delete item.value.data.categories;
                         delete item.value.data.gps;
+                        delete item.value.data.logo;
                         return item;
                     });
 

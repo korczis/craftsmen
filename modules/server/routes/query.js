@@ -29,7 +29,14 @@
                 q = q.replace(" ", ".*");
 
                 coll.find({'value.data.name': new RegExp(q, "i")}).limit(10).toArray(function (err, data) {
-                    res.json(data);
+                    var stripped = data.map(function(item) {
+                        delete item.value.data.profileUrl;
+                        delete item.value.data.categories;
+                        delete item.value.data.gps;
+                        return item;
+                    });
+
+                    res.json(stripped);
                 });
             });
         });

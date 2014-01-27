@@ -24,7 +24,7 @@
         ["ember", "app", "jquery"], function (Ember, App, $) {
 
             App.SearchInputComponent = Ember.TextField.extend({
-                classNames: ["blah"],
+                classNames: ["search-input"],
                 attributeBindings: ['placeholder'],
 
                 becomeFocused: function() {

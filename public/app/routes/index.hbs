@@ -1,35 +1,50 @@
-<div class="container">
-    <div class="row">
-        <h1 class="text-center">{{App.config.appName}}</h1>
-    </div>
+<div class="header">
+    <h1>{{App.config.appName}} Search</h1>
 
-    <div class="row">
-        <form class="form" role="search" action="javascript://void(0);" {{action "search"}}>
-            <div class="input-group">
-                {{input valueBinding="controller.query.q" class="form-control" placeholder="Type your search query ..."}}
-
-                <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </div>
-            </div>
+    <div class="search-box">
+        <form class="form input-group" role="search" action="javascript://void(0);" {{action "search"}}>
+            {{input valueBinding="controller.query.q" class="search-input" placeholder="Type your search query ..."}}
         </form>
     </div>
+</div>
 
-    <div class="row">
-        {{#each controller.results}}
-            <hr/>
-            <div>
-            {{#with value.data}}
-                <div><strong>{{name}}</strong></div>
-                <div>{{description}}</div>
-                <div>
-                    <span>{{address.street}}, {{address.city}}</span>
-                </div>
-                <div>{{createdAt}}<span>{{datetime createdAt}}</span></div>
-            {{/with}}
+<div class="container two-columns">
+
+    {{#each controller.results}}
+        <div class="row">
+            <div class="col-md-12">
+
+                {{#with value.data}}
+                    <div class="search-result">
+                        <h2 class="result-title">{{name}}</h2>
+
+                        <p class="result-address">
+                            {{#if address.street}}
+                                {{address.street}},
+                            {{/if}}
+
+                            {{address.city}}
+                        </p>
+
+                        <p class="result-info">{{description}}</p>
+
+                        <p class="result-contact">
+                            {{#if phone}}
+                                <span class="glyphicon glyphicon-earphone"></span>
+                                {{phone}} <br/>
+                            {{/if}}
+
+                            {{#if email}}
+                                <span class="glyphicon glyphicon-envelope"></span>
+                                {{email}} <br/>
+                            {{/if}}
+                        </p>
+                    </div>
+                {{/with}}
+
             </div>
-        {{/each}}
-    </div>
+        </div>
+    {{/each}}
+
 </div>
 

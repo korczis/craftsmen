@@ -1,10 +1,13 @@
+/***************************
+      VARIABLES
+ ***************************/
 //Google Fonts
 //Open Sans
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=latin,latin-ext);
 
-//variables
 $primary-color: #ffffff;
 $secondary-color: #01203c;
+$light-color: transparentize(#090909, 0.3);
 $primary-font: 'Open Sans', sans-serif;
 
 body {
@@ -12,88 +15,129 @@ body {
   font-family: $primary-font;
 }
 
-html {
-  background: url('../img/homepage-bg.png') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-
-  background-color: $secondary-color;
-
+h1, h2, h3 {
+  font-family: $primary-font;
 }
 
-#homepage {
-  color: $primary-color;
-
-  a {
-    text-decoration: none;
-    padding-bottom: 0.05em;
-    color: $primary-color;
-
-    &:hover {
-      color: transparentize($primary-color, 0.25);
-    }
-
-    &:active, &:visited {
-      color: $primary-color;
-    }
-  }
+/***************************
+      SEARCH
+ ***************************/
+#search {
+  color: $secondary-color;
 
   .header {
-    .logo {
-      font-size: 2em;
-      padding: 1em;
-      //      background-color: red;
-      display: inline-block;
-      float: left;
+    background: url('/img/next-big-thing.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-color: $secondary-color;
+    color: $primary-color;
+    margin: 0;
+    padding: 4em;
+
+    @media screen and (max-width: 600px) {
+      padding: 2em;
     }
 
-    .menu {
-      font-size: 1.5em;
-      float: right;
-      margin-top: 1.7em;
+    h1 {
+      font-size: 4em;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-weight: 700;
 
-      ul {
-        margin: 0;
-        padding: 0;
+      @media screen and (max-width: 600px) {
+        font-size: 3em;
+      }
+    }
+
+    .search-box {
+      text-align: center;
+      margin-top: 3em;
+
+      @media screen and (max-width: 600px) {
+        margin-top: 1em;
       }
 
-      li {
-        display: inline;
-        margin-left: 1.5em;
+      .input-group {
+        width: 100%;
+      }
 
-        &:first-child {
-          margin-left: 0;
+      .search-input {
+        width: inherit;
+        max-width: 900px;
+        padding: 0.1em;
+        font-size: 1.8em;
+        text-align: center;
+        color: $secondary-color;
+        font-weight: 400;
+
+        @media screen and (max-width: 600px) {
+          font-size: 1.5em;
         }
       }
     }
+
   }
 
-  .hero-message {
-    color: $primary-color;
-    margin: 0 auto;
+  .search-note {
+    color: $light-color;
+    margin-top: 1em;
+  }
+
+  /***************************
+      RESULTS
+  ***************************/
+
+  .two-columns {
     margin-top: 2em;
-    max-width: 1000px;
-    font-size: 6em;
-    text-transform: uppercase;
-    text-align: center;
+    margin-bottom: 2em;
 
-    .light {
-      font-weight: 300;
+    @media screen and (min-width: 600px) {
+
+      -moz-column-count: 2; /* Firefox */
+      -webkit-column-count: 2; /* Safari and Chrome */
+      column-count: 2;
+
+      -moz-column-gap: 5em;
+      -webkit-column-gap: 5em;
+      column-gap: 5em;
+
+      column-rule: 1px outset #ACACAA;
+      -moz-column-rule: 1px outset #ACACAA; /* Firefox */
+      -webkit-column-rule: 1px outset #ACACAA; /* Safari and Chrome */
     }
+  }
 
-    .action {
+  .search-result {
+    margin-bottom: 2.5em;
+    display:inline-block;
+
+    .result-title {
+      font-size: 1.5em;
+      margin: 0;
       font-weight: 400;
-      border-bottom: solid 0.09em $primary-color;
-
-      &:hover {
-        border-bottom: solid 0.09em transparentize($primary-color, 0.25);
-      }
     }
 
-    .strong {
-      font-weight: 700;
+    .result-info {
+      font-size: 1em;
+      margin: 0;
+      padding: 0;
+    }
+
+    .result-address {
+      color: $light-color;
+      margin-bottom: 0.5em;
+      border-bottom: 0.2em solid transparentize(black, 0.85);
+    }
+
+    .result-contact {
+      margin-top: 0.6em;
+
+      .glyphicon {
+        margin-right: 0.5em;
+      }
     }
   }
 

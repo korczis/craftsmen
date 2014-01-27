@@ -10,6 +10,8 @@ Simple Craftsmen Listing based on top of microscratch
 
 [![GitHub version](https://badge.fury.io/gh/korczis%2Fmicroscratch.png)](http://badge.fury.io/gh/korczis%2Fmicroscratch)
 [![Build Status](https://travis-ci.org/korczis/microscratch.png?branch=master)](https://travis-ci.org/korczis/microscratch)
+[![Dependency Status](https://gemnasium.com/korczis/microscratch.png)](https://gemnasium.com/korczis/microscratch)
+[![Code Climate](https://codeclimate.com/repos/52e679aee30ba05f9a01374c/badges/518ba5511bb96351aa4e/gpa.png)](https://codeclimate.com/repos/52e679aee30ba05f9a01374c/feed)
 [![Total views](https://sourcegraph.com/api/repos/github.com/korczis/microscratch/counters/views.png)](https://sourcegraph.com/github.com/korczis/microscratch)
 
 ## Demo
@@ -24,6 +26,8 @@ Simple Craftsmen Listing based on top of microscratch
 ### What is the microscratch?
 
   microscratch is minimalistic opionated modern web application framework.
+  
+  For clarification of words and term used please see [glossary](https://github.com/korczis/microscratch/blob/master/GLOSSARY.md).
    
 ### Why is called microscratch?
 
@@ -50,7 +54,7 @@ Simple Craftsmen Listing based on top of microscratch
 
 ### Is it production ready?
 
-  It depends. If is node.js, mongo and ember production ready for then microscratch is too...
+  It depends. If isthe node.js, mongo and/or ember are production ready for you then microscratch is ready too...
   
 ## Installation
 
@@ -97,6 +101,20 @@ Simple Craftsmen Listing based on top of microscratch
   # Run application
   node app.js
   ```
+
+## First start
+
+  - What is happening during the bootsequence?
+  - What are the main configs?
+  - Can I add my own initializers?
+  - What are the steps in bootstrap process?
+  - How can I overide option from CLI?
+
+## CLI
+
+  - What is CLI?
+  - How to use CLI?
+  - Are there any CLI examples?
 
 ## Communication
 
@@ -148,4 +166,4 @@ Simple Craftsmen Listing based on top of microscratch
 
 ## References
   
-  TBD
+  To Be Done

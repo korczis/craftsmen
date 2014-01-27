@@ -18,19 +18,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+(function() {
+    'use strict';
 
-(function (global) {
-    "use strict";
+    var mongoose = require('mongoose'),
+        timestamps = require("mongoose-times"),
+        Schema = mongoose.Schema;
 
-    require
-    (
-        ["ember"], function (Ember) {
-            Ember.Handlebars.registerBoundHelper("math", function (lvalue, operator, rvalue, options) {
-                Ember.Handlebars.registerBoundHelper('csv', function(items, options) {
-                    return items.toArray().sort().join(', ');
-                });
-            });
+    var wirePlugin = function(schema, plugin) {
+        var p = require(plugin.path);
+        schema.plugin(p, plugin.options);
+
+    };
+
+    /** Convert DB model to View model */
+    exports.declare = function(name, schema) {
+        /**
+         * Client Schema
+         */
+        var ObjectSchema = new Schema(schema);
+
+        ObjectSchema.plugin(timestamps, {
+            created: "createdAt",
+            lastUpdated: "updatedAt"
         });
 
-})(this);
+        mongoose.model(name, ObjectSchema);
 
+        return ObjectSchema;
+    };
+
+})();

@@ -18,19 +18,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+(function () {
+    'use strict';
 
-(function (global) {
-    "use strict";
+    module.exports = function() {
+        /**
+         * Module dependencies.
+         */
+        var model = require('../model'),
+            mongoose = require('mongoose');
 
-    require
-    (
-        ["ember"], function (Ember) {
-            Ember.Handlebars.registerBoundHelper("math", function (lvalue, operator, rvalue, options) {
-                Ember.Handlebars.registerBoundHelper('csv', function(items, options) {
-                    return items.toArray().sort().join(', ');
-                });
-            });
+        model.declare('Session', {
+            session: String
         });
+    };
 
-})(this);
-
+})();

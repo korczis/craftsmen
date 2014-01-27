@@ -3,21 +3,21 @@
       VARIABLES
  ***************************/
 body {
-  background: transparent;
-  font-family: "Open Sans", sans-serif; }
+    background: transparent;
+    font-family: "Open Sans", sans-serif; }
 
 h1, h2, h3 {
-  font-family: "Open Sans", sans-serif; }
+    font-family: "Open Sans", sans-serif; }
 
 /***************************
       SEARCH
  ***************************/
 #search {
-  color: #01203c;
-  /***************************
-      RESULTS
-  ***************************/ }
-  #search .header {
+    color: #01203c;
+    /***************************
+        RESULTS
+    ***************************/ }
+#search .header {
     background: url("/img/next-big-thing.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -27,45 +27,45 @@ h1, h2, h3 {
     color: white;
     margin: 0;
     padding: 4em; }
-    @media screen and (max-width: 600px) {
-      #search .header {
+@media screen and (max-width: 600px) {
+    #search .header {
         padding: 2em; } }
+#search .header h1 {
+    font-size: 4em;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-weight: 700; }
+@media screen and (max-width: 600px) {
     #search .header h1 {
-      font-size: 4em;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      font-weight: 700; }
-      @media screen and (max-width: 600px) {
-        #search .header h1 {
-          font-size: 3em; } }
+        font-size: 3em; } }
+#search .header .search-box {
+    text-align: center;
+    margin-top: 3em; }
+@media screen and (max-width: 600px) {
     #search .header .search-box {
-      text-align: center;
-      margin-top: 3em; }
-      @media screen and (max-width: 600px) {
-        #search .header .search-box {
-          margin-top: 1em; } }
-      #search .header .search-box .input-group {
-        width: 100%; }
-      #search .header .search-box .search-input {
-        width: inherit;
-        max-width: 900px;
-        padding: 0.1em;
-        font-size: 1.8em;
-        text-align: center;
-        color: #01203c;
-        font-weight: 400; }
-        @media screen and (max-width: 600px) {
-          #search .header .search-box .search-input {
-            font-size: 1.5em; } }
-  #search .search-note {
+        margin-top: 1em; } }
+#search .header .search-box .input-group {
+    width: 100%; }
+#search .header .search-box .search-input {
+    width: inherit;
+    max-width: 900px;
+    padding: 0.1em;
+    font-size: 1.8em;
+    text-align: center;
+    color: #01203c;
+    font-weight: 400; }
+@media screen and (max-width: 600px) {
+    #search .header .search-box .search-input {
+        font-size: 1.5em; } }
+#search .search-note {
     color: rgba(9, 9, 9, 0.7);
     margin-top: 1em; }
-  #search .two-columns {
+#search .two-columns {
     margin-top: 2em;
     margin-bottom: 2em; }
-    @media screen and (min-width: 600px) {
-      #search .two-columns {
+@media screen and (min-width: 600px) {
+    #search .two-columns {
         -moz-column-count: 2;
         /* Firefox */
         -webkit-column-count: 2;
@@ -79,22 +79,22 @@ h1, h2, h3 {
         /* Firefox */
         -webkit-column-rule: 1px outset #ACACAA;
         /* Safari and Chrome */ } }
-  #search .search-result {
+#search .search-result {
     margin-bottom: 2.5em;
     display: inline-block; }
-    #search .search-result .result-title {
-      font-size: 1.5em;
-      margin: 0;
-      font-weight: 400; }
-    #search .search-result .result-info {
-      font-size: 1em;
-      margin: 0;
-      padding: 0; }
-    #search .search-result .result-address {
-      color: rgba(9, 9, 9, 0.7);
-      margin-bottom: 0.5em;
-      border-bottom: 0.2em solid rgba(0, 0, 0, 0.15); }
-    #search .search-result .result-contact {
-      margin-top: 0.6em; }
-      #search .search-result .result-contact .glyphicon {
-        margin-right: 0.5em; }
+#search .search-result .result-title {
+    font-size: 1.5em;
+    margin: 0;
+    font-weight: 400; }
+#search .search-result .result-info {
+    font-size: 1em;
+    margin: 0;
+    padding: 0; }
+#search .search-result .result-address {
+    color: rgba(9, 9, 9, 0.7);
+    margin-bottom: 0.5em;
+    border-bottom: 0.2em solid rgba(0, 0, 0, 0.15); }
+#search .search-result .result-contact {
+    margin-top: 0.6em; }
+#search .search-result .result-contact .glyphicon {
+    margin-right: 0.5em; }

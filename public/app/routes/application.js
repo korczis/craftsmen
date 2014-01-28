@@ -82,7 +82,7 @@
 
                     console.log("Searching '" + q + "'");
 
-                    var url = "/query?q=" + q;
+                    var url = "/fts?q=" + q;
 
                     var self = this;
                     $.get(url, function( data ) {

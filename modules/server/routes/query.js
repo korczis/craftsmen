@@ -51,9 +51,9 @@
                 var term = req.query.q || "";
                 var tokens = term.split(',');
 
-                var qTemplate = '(cs_description:"QUERY" OR cs_name:"QUERY")';
+                var qTemplate = '(cs_description:(QUERY) OR cs_name:(QUERY))';
                 if(tokens.length > 1) {
-                    qTemplate += ' AND cs_address_city:"ADDRESS_CITY"';
+                    qTemplate += ' AND cs_address_city:(ADDRESS_CITY)';
                 }
 
                 var query = qTemplate;

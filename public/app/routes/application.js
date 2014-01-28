@@ -38,10 +38,7 @@
                 placeholder: "Type your search query!",
 
                 becomeFocused: function() {
-                    var self = this;
-                    var i = 0;
-
-                    this.$().focus();
+                   // this.$().focus();
                 }.on('didInsertElement')
             });
 
@@ -75,6 +72,24 @@
                 query: Ember.Object.create({
                    q: ""
                 }),
+
+                updateResults: function() {
+                    var q = this.get('query.q');
+                    if(!q || q === "") {
+                        this.set('results', []);
+                        return;
+                    }
+
+                    console.log("Searching '" + q + "'");
+
+                    var url = "/query?q=" + q;
+
+                    var self = this;
+                    $.get(url, function( data ) {
+                        self.set('results', data);
+                    });
+
+                },
 
                 searchAsYouTypeHandler: function() {
                     this.updateResults();

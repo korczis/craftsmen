@@ -27,7 +27,31 @@
                 classNames: ["search-input"],
                 attributeBindings: ['placeholder'],
 
+                hints: Ember.A([
+                    "potraviny",
+                    "autoservis",
+                    "telefony",
+                    "restaurace",
+                    "taxi"
+                ]),
+
+                placeholder: "Type your search query!",
+
                 becomeFocused: function() {
+                    var self = this;
+                    var i = 0;
+
+                    function update() {
+                        var hints = self.get('hints');
+                        setTimeout(function() {
+                            self.set('placeholder', hints[i++ % hints.get('length')]);
+                            update();
+                        }, 3500);
+                        // update();
+                    }
+
+                    update();
+
                     this.$().focus();
                 }.on('didInsertElement')
             });

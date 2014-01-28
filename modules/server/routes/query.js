@@ -48,17 +48,31 @@
 
         app.get('/fts', function (req, res) {
             var col = microscratch.mongo.getCollection('datasets').then(function (coll) {
+                var term = req.query.q || "";
+                var tokens = term.split(',');
 
-                var q = req.query.q || "";
+                var qTemplate = '(cs_description:"QUERY" OR cs_name:"QUERY")';
+                if(tokens.length > 1) {
+                    qTemplate += ' AND cs_address_city:"ADDRESS_CITY"';
+                }
 
-                var qTemplate = 'cs_description:"QUERY" OR cs_name:"QUERY"';
+                var query = qTemplate;
+
                 var re = new RegExp("QUERY", 'g');
+                query = query.replace(re, tokens[0]);
 
-                var url = microscratch.config.solr.uri + '/select?' + querystring.stringify({
-                    q: qTemplate.replace(re, q),
+                if(tokens.length > 1) {
+                    re = new RegExp("ADDRESS_CITY", 'g');
+                    query = query.replace(re, tokens[1]);
+                }
+
+                var query = {
+                    q: query,
                     wt: "json",
                     indent: 1
-                });
+                };
+
+                var url = microscratch.config.solr.uri + '/select?' + querystring.stringify(query);
 
                 console.log(url);
 

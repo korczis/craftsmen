@@ -21,7 +21,8 @@
 (function () {
     'use strict';
 
-    var request = require('request'),
+    var querystring = require('querystring'),
+        request = require('request'),
         ObjectID = require('mongodb').ObjectID;
 
     var exports = module.exports = function (microscratch, app) {
@@ -49,10 +50,17 @@
             var col = microscratch.mongo.getCollection('datasets').then(function (coll) {
 
                 var q = req.query.q || "";
-                q = q.replace(" ", ".*");
 
-                var urlTemplate = microscratch.config.solr.uri + '/select?q=cs_description:"QUERY"&wt=json&indent=1';
-                var url = urlTemplate.replace("QUERY", q);
+                var qTemplate = 'cs_description:"QUERY" OR cs_name:"QUERY"';
+                var re = new RegExp("QUERY", 'g');
+
+                var url = microscratch.config.solr.uri + '/select?' + querystring.stringify({
+                    q: qTemplate.replace(re, q),
+                    wt: "json",
+                    indent: 1
+                });
+
+                console.log(url);
 
                 request(url, function (error, response, body) {
                     if (!error && response.statusCode == 200) {

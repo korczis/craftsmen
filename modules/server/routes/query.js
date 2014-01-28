@@ -52,7 +52,7 @@
                 var tokens = term.split(',');
 
                 var qTemplate = '(cs_description:(QUERY) OR cs_name:(QUERY))';
-                if(tokens.length > 1) {
+                if (tokens.length > 1) {
                     qTemplate += ' AND cs_address_city:(ADDRESS_CITY)';
                 }
 
@@ -61,7 +61,7 @@
                 var re = new RegExp("QUERY", 'g');
                 query = query.replace(re, tokens[0]);
 
-                if(tokens.length > 1) {
+                if (tokens.length > 1) {
                     re = new RegExp("ADDRESS_CITY", 'g');
                     query = query.replace(re, tokens[1]);
                 }
@@ -94,7 +94,13 @@
                                 return item;
                             });
 
-                            res.json(stripped);
+                            res.json({
+                                stats: {
+                                    execTime: bodyObj.responseHeader.QTime * 0.001,
+                                    totalCount: bodyObj.response.numFound
+                                },
+                                results: stripped
+                            });
                         });
                     }
                 })

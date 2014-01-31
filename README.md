@@ -4,7 +4,7 @@ Simple Craftsmen Listing based on top of microscratch
 
 ## Preview
 
-![image](https://raw2.github.com/pavelbinar/craftsmen/homepage/preview.png)
+[![preview](http://imageshack.com/a/img841/4659/lbcg.png)](http://craftsmen.apollocrawler.com)]
 
 ## Project Status
 

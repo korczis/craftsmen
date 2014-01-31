@@ -20,7 +20,7 @@
 
 //*
 define({
-    appName: "Craftsmen",
+    app: {"name":"Craftsmen","googleAnalytics":{"enabled":false,"id":"UA-XXXXXXXX-X","host":"yourdomain.com"}},
     shim: {
         "bootstrap": {
             deps: ["jquery"]

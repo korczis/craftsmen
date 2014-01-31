@@ -138,7 +138,7 @@
         utils.preprocessFile(this.config.client.configTemplate,
             this.config.client.configDestination,
             {
-                "$appName$": this.config.appName
+                '"$app$"': JSON.stringify(this.config.app)
             });
 
         var router = require('./router.js');

@@ -26,7 +26,16 @@
     module.exports = {
 
         _global: {
-            appName: "Craftsmen",
+            app: {
+                name: "Craftsmen",
+
+                // Google analytics section
+                googleAnalytics: {
+                    enabled: false,
+                    id: 'UA-XXXXXXXX-X',
+                    host: 'yourdomain.com'
+                }
+            },
 
             client: {
                 configTemplate: path.join(__dirname, "public/js/config.template.js"),

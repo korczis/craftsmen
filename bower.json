@@ -29,5 +29,8 @@
     "chai": "1.8.1",
     "chai-jquery": "1.2.1",
     "moment": "2.5.1"
+  },
+  "resolutions": {
+    "jquery": "2.1.0"
   }
 }

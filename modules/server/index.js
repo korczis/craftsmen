@@ -134,7 +134,6 @@
             res.send(500, 'Something broke!');
         });
 
-        // TODO: Process config
         utils.preprocessFile(this.config.client.configTemplate,
             this.config.client.configDestination,
             {

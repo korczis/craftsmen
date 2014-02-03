@@ -62,7 +62,7 @@
 
             solr: {
                 enabled: true,
-                uri: "http://apollocrawler.com:8983/solr/apollo"
+                uri: "http://apollocrawler.com:8080/solr/apollo"
             }
         },
 

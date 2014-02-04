@@ -9,10 +9,10 @@ Simple Craftsmen Listing based on top of microscratch
 ## Project Status
 
 [![GitHub version](https://badge.fury.io/gh/korczis%2Fmicroscratch.png)](http://badge.fury.io/gh/korczis%2Fmicroscratch)
-[![Build Status](https://travis-ci.org/korczis/microscratch.png?branch=master)](https://travis-ci.org/korczis/microscratch)
+[![Build Status](https://travis-ci.org/ApolloCrawler/microscratch.png?branch=master)](https://travis-ci.org/ApolloCrawler/microscratch)
 [![Dependency Status](https://gemnasium.com/korczis/microscratch.png)](https://gemnasium.com/korczis/microscratch)
-[![Code Climate](https://codeclimate.com/repos/52e679aee30ba05f9a01374c/badges/518ba5511bb96351aa4e/gpa.png)](https://codeclimate.com/repos/52e679aee30ba05f9a01374c/feed)
-[![Total views](https://sourcegraph.com/api/repos/github.com/korczis/microscratch/counters/views.png)](https://sourcegraph.com/github.com/korczis/microscratch) 
+[![Code Climate](https://codeclimate.com/repos/52eeccb869568029a80003ff/badges/3fd9b15792ebb7277355/gpa.png)](https://codeclimate.com/repos/52eeccb869568029a80003ff/feed)
+[![Total views](https://sourcegraph.com/api/repos/github.com/ApolloCrawler/microscratch/counters/views.png)](https://sourcegraph.com/github.com/ApolloCrawler/microscratch) 
 
 ### Uptime
 
@@ -24,6 +24,11 @@ Simple Craftsmen Listing based on top of microscratch
   microscratch is minimalistic opionated modern web application framework.
   
   For clarification of words and term used please see [glossary](https://github.com/korczis/microscratch/blob/master/GLOSSARY.md).
+
+### What are the principles?
+
+ * Being [idiomatic](https://github.com/rwaldron/idiomatic.js) - All code in any code-base should look like a single person typed it, no matter how many people contributed.
+ * Asking [smart questions](http://www.catb.org/~esr/faqs/smart-questions.html).
    
 ### Why is called microscratch?
 

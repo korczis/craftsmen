@@ -8,11 +8,11 @@ Simple Craftsmen Listing based on top of microscratch
 
 ## Project Status
 
-[![GitHub version](https://badge.fury.io/gh/korczis%2Fmicroscratch.png)](http://badge.fury.io/gh/korczis%2Fmicroscratch)
-[![Build Status](https://travis-ci.org/ApolloCrawler/microscratch.png?branch=master)](https://travis-ci.org/ApolloCrawler/microscratch)
-[![Dependency Status](https://gemnasium.com/korczis/microscratch.png)](https://gemnasium.com/korczis/microscratch)
+[![GitHub version](https://badge.fury.io/gh/ApolloCrawler%2Fcraftsmen.png)](http://badge.fury.io/gh/ApolloCrawler%2Fcraftsmen)
+[![Build Status](https://travis-ci.org/ApolloCrawler/craftsmen.png?branch=master)](https://travis-ci.org/ApolloCrawler/craftsmen)
+[![Dependency Status](https://gemnasium.com/ApolloCrawler/craftsmen.png)](https://gemnasium.com/ApolloCrawler/crafsmen)
 [![Code Climate](https://codeclimate.com/repos/52eeccb869568029a80003ff/badges/3fd9b15792ebb7277355/gpa.png)](https://codeclimate.com/repos/52eeccb869568029a80003ff/feed)
-[![Total views](https://sourcegraph.com/api/repos/github.com/ApolloCrawler/microscratch/counters/views.png)](https://sourcegraph.com/github.com/ApolloCrawler/microscratch) 
+[![Total views](https://sourcegraph.com/api/repos/github.com/ApolloCrawler/craftsmen/counters/views.png)](https://sourcegraph.com/github.com/ApolloCrawler/craftsmen) 
 
 ### Uptime
 

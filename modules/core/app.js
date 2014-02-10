@@ -21,60 +21,51 @@
 (function () {
     'use strict';
 
-    var CoreModule = require('./index'),
-        path = require('path'),
-        util = require('util'),
-        utils = require('../utils');
+    if (typeof define !== 'function') {
+        var define = require('amdefine')(module);
+    }
 
-    var exports = module.exports = function CoreApp(modules) {
-        this.modules = modules;
-    };
+    define(['./index', '../utils', 'path', 'util'], function(CoreModule, utils, path, util) {
+        var exports = module.exports = function CoreApp(config, cli) {
+            this.config = config;
+            this.cli = cli;
+        };
 
-    util.inherits(exports, CoreModule);
+        util.inherits(exports, CoreModule);
 
-    exports.prototype.modules = {};
+        exports.prototype.config = null;
 
-    exports.prototype.run = function() {
-        var argv = this.modules.cli.args().argv;
+        exports.prototype.cli = null;
 
-        if (argv["v"] || argv["verbose"]) {
-            console.log("Parsed options: " + JSON.stringify(argv, null, 4));
-        }
 
-        var opts = argv["o"] || argv["option"];
-        if (opts) {
-            if (Object.prototype.toString.call(opts) !== '[object Array]') {
-                opts = [opts];
+        exports.prototype.parseCliOptions = function() {
+            var argv = this.cli.args().argv;
+
+            var opts = argv["o"] || argv["option"];
+            if (opts) {
+                if (Object.prototype.toString.call(opts) !== '[object Array]') {
+                    opts = [opts];
+                }
+
+                for (var i = 0; i < opts.length; i++) {
+                    var opt = opts[i];
+                    var tokens = opt.split("=");
+                    utils.setObjectProperty(this.config, tokens[0], tokens[1]);
+                }
+            }
+        };
+
+        exports.prototype.run = function() {
+            if(this.cli) {
+                this.parseCliOptions();
             }
 
-            for (var i = 0; i < opts.length; i++) {
-                var opt = opts[i];
-                var tokens = opt.split("=");
-                utils.setObjectProperty(config, tokens[0], tokens[1]);
-            }
-        }
-
-        // Initialize config
-        var env = argv["e"] || "local";
-
-        var config = utils.loadConfig(path.join(__dirname, '../../config.js'), env);
-
-        // Hard-coded load of config
-        this.modules.config = config;
-
-        // Initialize logger
-        var Logger = require('../logger');
-        this.modules.logger = Logger;
-
-        if (this.modules.config.verbose) {
-            this.modules.logger.log("Config loaded: " + JSON.stringify(this.modules.config, null, 4));
-        }
-
-        var Server = require('../server');
-        var app = new Server(this.modules.config);
-        app.initialize().done(function (res) {
-            app.main();
-        });
-    };
+            var Server = require('../server');
+            var app = new Server(this.config);
+            app.initialize().done(function (res) {
+                app.main();
+            });
+        };
+    });
 
 }());

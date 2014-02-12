@@ -19,23 +19,49 @@
 // THE SOFTWARE.
 
 (function () {
+    'use strict';
 
-    var child_process = require('child_process'),
-        chai = require('chai'),
-        expect = chai.expect,
-        path = require('path');
+    var define = require('amdefine')(module);
 
-    describe('Module Solr', function () {
-        var SolrModule = null;
+    var deps = [
+        "../../../modules/solr",
+        'chai',
+        'dependable',
+        'path',
+        'requirejs'
+    ];
 
-        beforeEach(function () {
-            SolrModule = require(path.join(__dirname, "../../../modules/solr"));
+    define(deps, function (Solr, chai, dependable, path, requirejs) {
+        requirejs.config(require('../../../require.js'));
+
+        var expect = chai.expect;
+
+        describe('Module Solr', function () {
+            var solrModule = null;
+
+            beforeEach(function () {
+                solrModule = new Solr();
+            });
+
+            it('Module Exists', function () {
+                expect(solrModule).to.not.equal(null);
+                expect(solrModule).to.not.equal(undefined);
+            });
+
+            it('Creates Instance', function () {
+                expect(solrModule).to.not.equal(null);
+                expect(solrModule).to.not.equal(undefined);
+            });
+
+            it('Is subclass of CoreModule', function () {
+                expect(solrModule instanceof Solr).to.equal(true);
+            });
+
+            it('Is subclass of Cli', function () {
+                expect(solrModule instanceof Solr).to.equal(true);
+            });
         });
 
-        it('Module Exists', function () {
-            expect(SolrModule).to.not.equal(null);
-            expect(SolrModule).to.not.equal(undefined);
-        });
     });
 }());
 

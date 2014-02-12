@@ -21,11 +21,15 @@
 (function () {
     'use strict';
 
-    if (typeof define !== 'function') {
-        var define = require('amdefine')(module);
-    }
+    var define = require('amdefine')(module);
 
-    define(['../utils', 'deferred', 'fs', 'path'], function(utils, deferred, fs, path) {
+    var deps = [
+        'deferred',
+        'fs',
+        'path'
+    ];
+
+    define(deps, function(deferred, fs, path) {
         /**
          * Intializes router
          * @param microscratch Microscratch app which this router belongs to

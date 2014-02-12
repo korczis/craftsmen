@@ -21,20 +21,30 @@
 (function () {
     'use strict';
 
-    if (typeof define !== 'function') {
-        var define = require('amdefine')(module);
-    }
+    var define = require('amdefine')(module);
 
-    define(['../model', 'events', 'util'], function(Model, events, util) {
-        var exports = module.exports = function Session(mongo) {
-            Session.super_.call(this, mongo);
+    var deps = [
+        "../core",
+        "util",
+        "csv"
+    ];
 
-            Model.declare.call(this, 'Session', {
-                session: String
-            });
+    define(deps, function (Core, util, Csv) {
+        /**
+         * ETL Interface
+         * @type {EtlModule}
+         */
+        var exports = module.exports = function EtlModule(resolver) {
+            // Call super constructor
+            EtlModule.super_.call(this, resolver);
         };
 
-        util.inherits(exports, Model);
-    });
+        util.inherits(exports, Core);
 
-})();
+        exports.prototype.load = function(csvPath, opts) {
+            var csv = new Csv();
+            return csv.from.path(csvPath, opts);
+        };
+
+    });
+}());

@@ -19,43 +19,34 @@
 // THE SOFTWARE.
 
 (function () {
+    'use strict';
 
-    var child_process = require('child_process'),
-        chai = require('chai'),
-        expect = chai.expect;
+    var define = require('amdefine')(module);
 
-    var CoreModule = require('../../../modules/core');
+    var deps = [
+        '../../mongo/model',
+        'events',
+        'util'
+    ];
 
-    describe('Module Core - App', function () {
-        var AppModule = null;
-        var appModule = null;
-
-        beforeEach(function () {
-            AppModule = require('../../../modules/core/app');
-            appModule = new AppModule();
+    define(deps, function(Model, events, util) {
+        var schema = Model.declareSchema('Session', {
+            session: String
         });
 
-        it('Loads module', function () {
-            expect(AppModule).to.not.equal(null);
-            expect(AppModule).to.not.equal(undefined);
-        });
+        var model = Model.declareModel('Session', schema);
 
-        it('Creates Instance', function () {
-            expect(appModule).to.not.equal(null);
-            expect(appModule).to.not.equal(undefined);
-        });
+        var exports = module.exports = function Session() {
+            Session.super_.call(this, schema, model);
 
-        it('Is subclass of CoreModule', function () {
-            expect(appModule instanceof CoreModule).to.equal(true);
-        });
+            return this;
+        };
 
-        it('Is subclass of AppModule', function () {
-            expect(appModule instanceof AppModule).to.equal(true);
-        });
+        util.inherits(exports, Model);
 
-        it('Implements \'run\' method', function() {
-            expect(appModule.run instanceof Function).to.equal(true);
-        });
+        exports.Schema = schema;
+
+        exports.Model = model;
     });
-}());
 
+})();

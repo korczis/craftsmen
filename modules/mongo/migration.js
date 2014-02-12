@@ -21,11 +21,15 @@
 (function() {
     'use strict';
 
-    if (typeof define !== 'function') {
-        var define = require('amdefine')(module);
-    }
+    var define = require('amdefine')(module);
 
-    define(['events', 'mongoose', 'util'], function(events, mongoose, util) {
+    var deps = [
+        'events',
+        'mongoose',
+        'util'
+    ];
+
+    define(deps, function(events, mongoose, util) {
         var exports = module.exports = function Migration(mongo) {
             this.mongo = mongo;
         };

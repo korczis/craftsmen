@@ -21,43 +21,49 @@
 (function() {
     'use strict';
 
-    if (typeof define !== 'function') {
-        var define = require('amdefine')(module);
-    }
+    var define = require('amdefine')(module);
 
-    define(['events', 'mongoose', 'mongoose-times', 'util'], function(events, mongoose, timestamps, util) {
-        var exports = module.exports = function Model(mongo) {
-            this.mongo = mongo;
+    var deps = [
+        'events',
+        'mongoose',
+        'mongoose-times',
+        'util'
+    ];
+
+    define(deps, function(events, mongoose, timestamps, util) {
+        var exports = module.exports = function Model(schema, model) {
+            this.schema = schema;
+            this.model = model;
         };
 
         util.inherits(exports, events.EventEmitter);
 
-        exports.prototype.mongo = null;
-
         exports.prototype.schema = null;
 
-        exports.prototype.wirePlugin = function(schema, plugin) {
+        exports.prototype.model = null;
+
+        exports.wirePlugin = function(schema, plugin) {
             var p = require(plugin.path);
             schema.plugin(p, plugin.options);
 
         };
 
-        exports.declare = function(name, schema) {
+        exports.declareSchema = function(name, schema) {
             /**
              * Client Schema
              */
-            var objectSchema = new  mongoose.Schema(schema);
+            var objectSchema = new  mongoose.Schema(schema, { collection: name });
 
             objectSchema.plugin(timestamps, {
                 created: "createdAt",
                 lastUpdated: "updatedAt"
             });
 
-            mongoose.model(name, objectSchema);
+            return objectSchema;
+        };
 
-            this.schema = objectSchema;
-
-            return this.schema;
+        exports.declareModel = function(name, schema) {
+            return mongoose.model(name, schema);
         };
     });
 

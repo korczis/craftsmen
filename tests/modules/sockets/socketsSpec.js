@@ -19,22 +19,28 @@
 // THE SOFTWARE.
 
 (function () {
+    'use strict';
 
-    var child_process = require('child_process'),
-        chai = require('chai'),
-        expect = chai.expect,
-        path = require('path');
+    var define = require('amdefine')(module);
 
-    describe('Module Sockets', function () {
-        var SocketsModule = null;
+    var deps = [
+        "../../../modules/sockets",
+        'chai',
+        'dependable',
+        'path',
+        'requirejs'
+    ];
 
-        beforeEach(function () {
-            SocketsModule = require(path.join(__dirname, "../../../modules/sockets"));
-        });
+    define(deps, function (Sockets, chai, dependable, path, requirejs) {
+        requirejs.config(require('../../../require.js'));
 
-        it('Module Exists', function () {
-            expect(SocketsModule).to.not.equal(null);
-            expect(SocketsModule).to.not.equal(undefined);
+        var expect = chai.expect;
+
+        describe('Module Sockets', function () {
+            it('Module Exists', function () {
+                expect(Sockets).to.not.equal(null);
+                expect(Sockets).to.not.equal(undefined);
+            });
         });
     });
 }());

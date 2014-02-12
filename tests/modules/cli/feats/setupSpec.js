@@ -19,41 +19,48 @@
 // THE SOFTWARE.
 
 (function () {
+    'use strict';
 
-    var child_process = require('child_process'),
-        chai = require('chai'),
-        expect = chai.expect;
+    var define = require('amdefine')(module);
 
-    var Optimist = require('optimist');
+    var deps = [
+        '../../../../tests/resolver',
+        '../../../../modules/cli',
+        'chai',
+        'dependable',
+        'optimist',
+        'requirejs'
+    ];
 
-    describe('Module CLI - setup', function () {
-        var CoreModule = null;
-        var CliModule = null;
-        var cliModule = null;
+    define(deps, function (resolver, Cli, chai, dependable, Optimist, requirejs) {
+        requirejs.config(require('../../../../require.js'));
 
-        beforeEach(function () {
-            CoreModule = require('../../../../modules/core');
+        var expect = chai.expect;
 
-            CliModule = require('../../../../modules/cli');
-            cliModule = new CliModule();
-        });
+        describe('Module CLI - setup', function () {
+            var cliModule = null;
 
-        it('Optimist object exists', function () {
-            var optimist = cliModule.args();
-            expect(optimist).to.not.equal(null);
-            expect(optimist).to.not.equal(undefined);
-        });
+            beforeEach(function () {
+                cliModule = new Cli(resolver);
+            });
 
-        it('Implements \'default\' method', function() {
-            expect(Optimist.default instanceof Function).to.equal(true);
-        });
+            it('Optimist object exists', function () {
+                var optimist = cliModule.args();
+                expect(optimist).to.not.equal(null);
+                expect(optimist).to.not.equal(undefined);
+            });
 
-        it('Implements \'describe\' method', function() {
-            expect(Optimist.describe instanceof Function).to.equal(true);
-        });
+            it('Implements \'default\' method', function () {
+                expect(Optimist.default instanceof Function).to.equal(true);
+            });
 
-        it('Implements \'usage\' method', function() {
-            expect(Optimist.usage instanceof Function).to.equal(true);
+            it('Implements \'describe\' method', function () {
+                expect(Optimist.describe instanceof Function).to.equal(true);
+            });
+
+            it('Implements \'usage\' method', function () {
+                expect(Optimist.usage instanceof Function).to.equal(true);
+            });
         });
     });
 }());

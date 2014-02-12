@@ -25,26 +25,27 @@
         var define = require('amdefine')(module);
     }
 
-    define(['../model', 'events', 'util'], function(Model, events, util) {
-        var exports = module.exports = function User(mongo) {
-            User.super_.call(this, mongo);
+    var requirejs = require('requirejs');
+    requirejs.config(require('../../require.js'));
 
-            Model.declare.call(this, 'User', {
-                name: String,
-                email: String,
-                emails: [String],
-                username: String,
-                provider: String,
-                hashed_password: String,
-                salt: String,
-                facebook: {},
-                twitter: {},
-                github: {},
-                google: {}
-            });
+    var deps = [
+        '../../modules/webapp',
+        'deferred',
+        'dependable',
+        'util'
+    ];
+
+    define(deps, function (Webapp, deferred, dependable, util) {
+        ///*
+        var resolver = dependable.container();
+
+        // Load app module
+        var exports = module.exports = function DefaultApp(resolver) {
+            DefaultApp.super_.call(this, resolver);
         };
 
-        util.inherits(exports, Model);
-    });
+        util.inherits(exports, Webapp);
 
-})();
+        //*/
+    });
+}());

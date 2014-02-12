@@ -19,40 +19,42 @@
 // THE SOFTWARE.
 
 (function () {
+    'use strict';
 
-    var child_process = require('child_process'),
-        events = require('events'),
-        chai = require('chai'),
-        expect = chai.expect;
+    var define = require('amdefine')(module);
 
-    var path = require('path'),
-        utils = require('../../../modules/utils');
+    var deps = [
+        '../../../tests/resolver',
+        '../../../modules/mongo',
+        '../../../modules/utils',
+        'chai',
+        'dependable',
+        'path',
+        'requirejs'
+    ];
 
-    // See http://chaijs.com/
-    // See http://sinonjs.org/
-    // See https://github.com/elliotf/mocha-sinon
-    // See https://github.com/domenic/sinon-chai
+    define(deps, function (resolver, Mongo, Utils, chai, dependable, path, requirejs) {
+        requirejs.config(require('../../../require.js'));
 
-    describe('Module Mongo', function () {
-        var mongo = null;
+        var expect = chai.expect;
 
-        beforeEach(function () {
-            var config = utils.loadConfig(path.join(__dirname, "../../../config.js"), "test");
+        describe('Module Mongo', function () {
+            var mongo = null;
 
-            var Mongo = require('../../../modules/mongo');
-            mongo = new Mongo(config);
-        });
+            beforeEach(function () {
+                mongo = new Mongo(resolver());
+            });
 
-        it('Connect to Existing Host', function (done) {
-            mongo.initialize().then(function (res) {
-                expect(res).to.not.equal(null);
-                done();
-            }, function () {
-                expect(false).to.equal(true);
-                done();
+            it('Connect to Existing Host', function (done) {
+                mongo.initialize().then(function (res) {
+                    expect(res).to.not.equal(null);
+                    done();
+                }, function () {
+                    expect(false).to.equal(true);
+                    done();
+                });
             });
         });
-
     });
 }());
 

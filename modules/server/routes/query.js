@@ -42,6 +42,10 @@
                     });
 
                     res.json(stripped);
+                }).done(function(res) {
+                    d.resolve(res);
+                }, function(err) {
+                    throw err;
                 });
             });
         });

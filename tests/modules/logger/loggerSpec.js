@@ -19,39 +19,51 @@
 // THE SOFTWARE.
 
 (function () {
+    'use strict';
 
-    var child_process = require('child_process'),
-        chai = require('chai'),
-        expect = chai.expect;
+    var define = require('amdefine')(module);
 
+    var deps = [
+        '../../../tests/resolver',
+        '../../../modules/logger',
+        'chai',
+        'dependable',
+        'requirejs'
+    ];
 
-    describe('Module Logger', function () {
-        var LoggerModule = null;
+    define(deps, function (resolver, Logger, chai, dependable, requirejs) {
+        requirejs.config(require('../../../require.js'));
 
-        beforeEach(function () {
-            LoggerModule = require('../../../modules/logger');
+        var expect = chai.expect;
+        var logger = null;
+
+        describe('Module Logger', function () {
+            beforeEach(function () {
+                logger = new Logger(resolver);
+            });
+
+            it('Loads Logger module', function () {
+                expect(Logger).to.not.equal(null);
+                expect(Logger).to.not.equal(undefined);
+            });
+
+            it('Has \'error\' method', function () {
+                expect(logger.error instanceof Function).to.equal(true);
+            });
+
+            it('Has \'info\' method', function () {
+                expect(logger.info instanceof Function).to.equal(true);
+            });
+
+            it('Has \'log\' method', function () {
+                expect(logger.log instanceof Function).to.equal(true);
+            });
+
+            it('Has \'warn\' method', function () {
+                expect(logger.warn instanceof Function).to.equal(true);
+            });
         });
 
-        it('Loads Logger module', function () {
-            expect(LoggerModule).to.not.equal(null);
-            expect(LoggerModule).to.not.equal(undefined);
-        });
-
-        it('Has \'error\' method', function () {
-            expect(LoggerModule.error instanceof Function).to.equal(true);
-        });
-
-        it('Has \'info\' method', function () {
-            expect(LoggerModule.info instanceof Function).to.equal(true);
-        });
-
-        it('Has \'log\' method', function () {
-            expect(LoggerModule.log instanceof Function).to.equal(true);
-        });
-
-        it('Has \'warn\' method', function () {
-            expect(LoggerModule.warn instanceof Function).to.equal(true);
-        });
     });
 }());
 

@@ -19,61 +19,70 @@
 // THE SOFTWARE.
 
 (function () {
+    'use strict';
 
-    var child_process = require('child_process'),
-        chai = require('chai'),
-        expect = chai.expect;
+    var define = require('amdefine')(module);
 
-    describe('Module Utils - Merge', function () {
-        var UtilsModule = null,
-            personJoe = null,
-            personJohny = null;
+    var deps = [
+        '../../../../modules/utils',
+        'chai',
+        'dependable',
+        'requirejs'
+    ];
 
-        beforeEach(function () {
-            UtilsModule = require('../../../../modules/utils');
+    define(deps, function (Utils, chai, dependable, requirejs) {
+        requirejs.config(require('../../../../require.js'));
 
-            personJoe = {
-                firstName: "Joe",
-                lastName: "Doe",
-                address: {
-                    country: "USA",
-                    city: "New York"
-                }
-            };
+        var expect = chai.expect;
 
-            personJohny = {
-                firstName: "Johny",
-                lastName: "Black",
-                address: {
-                    country: "USB",
-                    city: "Old York"
-                }
-            };
-        });
+        describe('Module Utils - Merge', function () {
+            var personJoe = null,
+                personJohny = null;
 
-        it('Basic Merge works', function () {
-            var res = UtilsModule.merge(personJoe, personJohny);
+            beforeEach(function () {
+                personJoe = {
+                    firstName: "Joe",
+                    lastName: "Doe",
+                    address: {
+                        country: "USA",
+                        city: "New York"
+                    }
+                };
 
-            expect(res.firstName).to.equal("Johny");
-            expect(res.lastName).to.equal("Black");
-        });
+                personJohny = {
+                    firstName: "Johny",
+                    lastName: "Black",
+                    address: {
+                        country: "USB",
+                        city: "Old York"
+                    }
+                };
+            });
 
-        it('Shallow Merge works', function () {
-            var res = UtilsModule.merge(personJoe, personJohny);
+            it('Basic Merge works', function () {
+                var res = Utils.merge(personJoe, personJohny);
 
-            personJohny.firstName = "Carl";
+                expect(res.firstName).to.equal("Johny");
+                expect(res.lastName).to.equal("Black");
+            });
 
-            expect(res.firstName).to.equal("Carl");
-            expect(res.lastName).to.equal("Black");
-        });
+            it('Shallow Merge works', function () {
+                var res = Utils.merge(personJoe, personJohny);
 
-        it('Deep Merge works', function () {
-            var res = UtilsModule.merge(personJoe, personJohny, true);
+                personJohny.firstName = "Carl";
 
-            personJohny.firstName = "Carl";
+                expect(res.firstName).to.equal("Carl");
+                expect(res.lastName).to.equal("Black");
+            });
 
-            expect(res.firstName).to.equal("Johny");
-            expect(res.lastName).to.equal("Black");
+            it('Deep Merge works', function () {
+                var res = Utils.merge(personJoe, personJohny, true);
+
+                personJohny.firstName = "Carl";
+
+                expect(res.firstName).to.equal("Johny");
+                expect(res.lastName).to.equal("Black");
+            });
         });
     });
 }());

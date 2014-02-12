@@ -21,30 +21,13 @@
 (function () {
     'use strict';
 
-    if (typeof define !== 'function') {
-        var define = require('amdefine')(module);
-    }
+    var define = require('amdefine')(module);
 
-    define(['deferred', 'request'], function(deferred, request) {
-        exports.deferredRequest = function (url) {
-            var d = deferred();
+    var deps = [
+        "./scraper"
+    ];
 
-            request(url, function (err, resp, body) {
-                if (err) {
-                    d.reject(new Error("Unable to fetch '" + url + "', reason: " + err));
-                    return;
-                }
-
-                if (resp.statusCode !== 200) {
-                    d.reject(new Error("Unable to fetch '" + url + "', code: " + resp.statusCode));
-                    return;
-                }
-
-                d.resolve(body);
-            });
-
-            return d.promise();
-        };
+    define(deps, function (Scraper) {
+        var exports = module.exports = Scraper;
     });
-
 }());

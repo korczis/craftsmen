@@ -21,16 +21,13 @@
 (function () {
     'use strict';
 
-    if (typeof define !== 'function') {
-        var define = require('amdefine')(module);
-    }
+    var define = require('amdefine')(module);
 
-    define(['../core', 'util'], function(core, util) {
-        var exports = module.exports = function SolrModule() {
+    var deps = [
+        "./solr"
+    ];
 
-        };
-
-        util.inherits(exports, core);
+    define(deps, function (Solr) {
+        var exports = module.exports = Solr;
     });
-
 }());

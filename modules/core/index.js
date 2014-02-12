@@ -21,20 +21,13 @@
 (function () {
     'use strict';
 
-    if (typeof define !== 'function') {
-        var define = require('amdefine')(module);
-    }
+    var define = require('amdefine')(module);
 
-    define(['events', 'util'], function(events, util) {
-        /**
-         * Core Module
-         * @type {CoreModule}
-         */
-        var exports = module.exports = function CoreModule() {
+    var deps = [
+        "./core"
+    ];
 
-        };
-
-        util.inherits(exports, events.EventEmitter);
+    define(deps, function (Core) {
+        var exports = module.exports = Core;
     });
-
 }());

@@ -21,15 +21,19 @@
 (function () {
     'use strict';
 
-    if (typeof define !== 'function') {
-        var define = require('amdefine')(module);
-    }
+    var define = require('amdefine')(module);
 
-    define(['../utils', 'fs', 'path'], function(utils, fs, path) {
+    var deps = [
+        '../utils',
+        'fs',
+        'path'
+    ];
+
+    define(deps, function(Utils, path, fs) {
         function Reloader() {
             var Server = require('./index.js');
 
-            this.config = utils.loadConfig(path.join(__dirname, "../../config.js"));
+            this.config = Utils.loadConfig(path.join(__dirname, "../../config.js"));
 
             this.app = new Server(this.config);
 

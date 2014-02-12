@@ -19,40 +19,48 @@
 // THE SOFTWARE.
 
 (function () {
+    'use strict';
 
-    var child_process = require('child_process'),
-        chai = require('chai'),
-        expect = chai.expect;
+    var define = require('amdefine')(module);
 
+    var deps = [
+        '../../../tests/resolver',
+        '../../../modules/config',
+        '../../../modules/core',
+        'chai',
+        'dependable',
+        'requirejs'
+    ];
 
-    describe('Module Config', function () {
-        var CoreModule = null;
-        var ConfigModule = null;
-        var configModule = null;
+    define(deps, function (resolver, Config, Core, chai, dependable, requirejs) {
+        requirejs.config(require('../../../require.js'));
 
-        beforeEach(function () {
-            CoreModule = require('../../../modules/core');
+        var expect = chai.expect;
 
-            ConfigModule = require('../../../modules/config');
-            configModule = new ConfigModule();
-        });
+        describe('Module Config', function () {
+           var configModule = null;
 
-        it('Loads module', function () {
-            expect(ConfigModule).to.not.equal(null);
-            expect(ConfigModule).to.not.equal(undefined);
-        });
+            beforeEach(function () {
+                configModule = new Config(resolver);
+            });
 
-        it('Creates Instance', function () {
-            expect(configModule).to.not.equal(null);
-            expect(configModule).to.not.equal(undefined);
-        });
+            it('Loads module', function () {
+                expect(Config).to.not.equal(null);
+                expect(Config).to.not.equal(undefined);
+            });
 
-        it('Is subclass of CoreModule', function () {
-            expect(configModule instanceof CoreModule).to.equal(true);
-        });
+            it('Creates Instance', function () {
+                expect(configModule).to.not.equal(null);
+                expect(configModule).to.not.equal(undefined);
+            });
 
-        it('Is subclass of ConfigModule', function () {
-            expect(configModule instanceof ConfigModule).to.equal(true);
+            it('Is subclass of Core', function () {
+                expect(configModule instanceof Core).to.equal(true);
+            });
+
+            it('Is subclass of Config', function () {
+                expect(configModule instanceof Config).to.equal(true);
+            });
         });
     });
 }());

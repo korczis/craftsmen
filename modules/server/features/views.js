@@ -18,63 +18,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-(function() {
+(function () {
     'use strict';
 
     var define = require('amdefine')(module);
 
     var deps = [
-        'events',
-        'mongoose',
-        'mongoose-times',
-        'util'
+        'express3-handlebars'
     ];
 
-    define(deps, function(events, mongoose, timestamps, util) {
-        var exports = module.exports = function Model(schema, model) {
-            this.schema = schema;
-            this.model = model;
+    define(deps, function(exphbs) {
+        function FeatureViews(server) {
+            server.app.set('view engine', 'hbs');
+            server.app.set('views', server.config.server.dirs.views);
+            server.app.set('layout', 'layout');
+            // this.app.enable('view cache');
+            server.app.engine('hbs', exphbs());
         };
 
-        util.inherits(exports, events.EventEmitter);
-
-        exports.schemas = {};
-
-        exports.models = {};
-
-        exports.prototype.schema = null;
-
-        exports.prototype.model = null;
-
-        exports.wirePlugin = function(schema, plugin) {
-            var p = require(plugin.path);
-            schema.plugin(p, plugin.options);
-
-        };
-
-        exports.declareSchema = function(name, schema) {
-            /**
-             * Client Schema
-             */
-            var res = new  mongoose.Schema(schema, { collection: name });
-
-            res.plugin(timestamps, {
-                created: "createdAt",
-                lastUpdated: "updatedAt"
-            });
-
-            exports.schemas[name] = res;
-
-            return res;
-        };
-
-        exports.declareModel = function(name, schema) {
-            var res = mongoose.model(name, schema);
-
-            exports.models[name] = res;
-
-            return res;
-        };
+        module.exports = FeatureViews;
     });
 
-})();
+}());

@@ -18,63 +18,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-(function() {
+(function () {
     'use strict';
 
     var define = require('amdefine')(module);
 
     var deps = [
+        '../../mongo/model',
         'events',
-        'mongoose',
-        'mongoose-times',
         'util'
     ];
 
-    define(deps, function(events, mongoose, timestamps, util) {
-        var exports = module.exports = function Model(schema, model) {
-            this.schema = schema;
-            this.model = model;
+    define(deps, function (Model, events, util) {
+        var schema = Model.declareSchema('Permission', {
+            name: String
+        });
+
+        var model = Model.declareModel('Permission', schema);
+
+        var exports = module.exports = function Permission() {
+            Permission.super_.call(this, schema, model);
+
+            return this;
         };
 
-        util.inherits(exports, events.EventEmitter);
+        util.inherits(exports, Model);
 
-        exports.schemas = {};
+        exports.Schema = schema;
 
-        exports.models = {};
+        exports.Model = model;
 
-        exports.prototype.schema = null;
+        /*
+        function Do(name, schemaDeclaration, exportsOut) {
+            var schema = Model.declareSchema(name, schemaDeclaration);
+            var model = Model.declareModel(name, schema);
 
-        exports.prototype.model = null;
+            util.inherits(exportsOut, Model);
 
-        exports.wirePlugin = function(schema, plugin) {
-            var p = require(plugin.path);
-            schema.plugin(p, plugin.options);
-
+            exportsOut.Schema = schema;
+            exportsOut.Model = model;
         };
-
-        exports.declareSchema = function(name, schema) {
-            /**
-             * Client Schema
-             */
-            var res = new  mongoose.Schema(schema, { collection: name });
-
-            res.plugin(timestamps, {
-                created: "createdAt",
-                lastUpdated: "updatedAt"
-            });
-
-            exports.schemas[name] = res;
-
-            return res;
-        };
-
-        exports.declareModel = function(name, schema) {
-            var res = mongoose.model(name, schema);
-
-            exports.models[name] = res;
-
-            return res;
-        };
+        //*/
     });
 
 })();

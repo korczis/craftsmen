@@ -18,63 +18,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-(function() {
+(function () {
     'use strict';
 
     var define = require('amdefine')(module);
 
     var deps = [
-        'events',
-        'mongoose',
-        'mongoose-times',
-        'util'
+        'connect-mongo',
+        'express'
     ];
 
-    define(deps, function(events, mongoose, timestamps, util) {
-        var exports = module.exports = function Model(schema, model) {
-            this.schema = schema;
-            this.model = model;
-        };
+    define(deps, function(Cm, express) {
+        var MongoStore = Cm(express);
 
-        util.inherits(exports, events.EventEmitter);
+        function FeatureSessions(server) {
+            server.app.cookieParser = express.cookieParser(server.config.server.session.secret);
+            server.app.use(server.app.cookieParser);
 
-        exports.schemas = {};
-
-        exports.models = {};
-
-        exports.prototype.schema = null;
-
-        exports.prototype.model = null;
-
-        exports.wirePlugin = function(schema, plugin) {
-            var p = require(plugin.path);
-            schema.plugin(p, plugin.options);
-
-        };
-
-        exports.declareSchema = function(name, schema) {
-            /**
-             * Client Schema
-             */
-            var res = new  mongoose.Schema(schema, { collection: name });
-
-            res.plugin(timestamps, {
-                created: "createdAt",
-                lastUpdated: "updatedAt"
+            server.app.sessionStore = new MongoStore({ // jshint ignore:line
+                url: server.config.mongo.uri,
+                collection: 'Session',
+                auto_reconnect: true
             });
 
-            exports.schemas[name] = res;
-
-            return res;
+            server.app.use(express.session({
+                secret: server.config.server.session.secret,
+                store: server.app.sessionStore
+            }));
         };
 
-        exports.declareModel = function(name, schema) {
-            var res = mongoose.model(name, schema);
-
-            exports.models[name] = res;
-
-            return res;
-        };
+        module.exports = FeatureSessions;
     });
 
-})();
+}());

@@ -18,63 +18,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-(function() {
+(function () {
     'use strict';
 
     var define = require('amdefine')(module);
 
     var deps = [
-        'events',
-        'mongoose',
-        'mongoose-times',
-        'util'
+        '../../../modules/utils'
     ];
 
-    define(deps, function(events, mongoose, timestamps, util) {
-        var exports = module.exports = function Model(schema, model) {
-            this.schema = schema;
-            this.model = model;
-        };
+    define(deps, function (Utils) {
+        /**
+         * Logger feature
+         * @param server
+         * @constructor
+         */
+        var exports = module.exports = function FeatureLogger(server) {
+            server.app.use(function (req, res, next) {
+                var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+                var ts = Utils.timestamp();
 
-        util.inherits(exports, events.EventEmitter);
-
-        exports.schemas = {};
-
-        exports.models = {};
-
-        exports.prototype.schema = null;
-
-        exports.prototype.model = null;
-
-        exports.wirePlugin = function(schema, plugin) {
-            var p = require(plugin.path);
-            schema.plugin(p, plugin.options);
-
-        };
-
-        exports.declareSchema = function(name, schema) {
-            /**
-             * Client Schema
-             */
-            var res = new  mongoose.Schema(schema, { collection: name });
-
-            res.plugin(timestamps, {
-                created: "createdAt",
-                lastUpdated: "updatedAt"
+                // TODO: use some templating, DRY!
+                server.logger.log("[" + ts + "] " + ip + " " + req.method + " " + req.url);
+                next(); // Passing the request to the next handler in the stack.
             });
 
-            exports.schemas[name] = res;
-
-            return res;
-        };
-
-        exports.declareModel = function(name, schema) {
-            var res = mongoose.model(name, schema);
-
-            exports.models[name] = res;
-
-            return res;
         };
     });
 
-})();
+}());

@@ -18,63 +18,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-(function() {
+(function () {
     'use strict';
 
     var define = require('amdefine')(module);
 
     var deps = [
-        'events',
-        'mongoose',
-        'mongoose-times',
-        'util'
+        'express',
+        'gzippo'
     ];
 
-    define(deps, function(events, mongoose, timestamps, util) {
-        var exports = module.exports = function Model(schema, model) {
-            this.schema = schema;
-            this.model = model;
-        };
+    define(deps, function(express, gzippo) {
+        /**
+         * Gzip feature
+         * @param server
+         * @constructor
+         */
+        var exports = module.exports = function FeatureGzip(server) {
+            if (server.config.server.gzip) {
+                server.app.use(gzippo.staticGzip(server.config.server.dirs.public));
+                server.app.use(gzippo.compress());
+            } else {
+                server.app.use(express.static(server.config.server.dirs.public));
+            }
 
-        util.inherits(exports, events.EventEmitter);
-
-        exports.schemas = {};
-
-        exports.models = {};
-
-        exports.prototype.schema = null;
-
-        exports.prototype.model = null;
-
-        exports.wirePlugin = function(schema, plugin) {
-            var p = require(plugin.path);
-            schema.plugin(p, plugin.options);
-
-        };
-
-        exports.declareSchema = function(name, schema) {
-            /**
-             * Client Schema
-             */
-            var res = new  mongoose.Schema(schema, { collection: name });
-
-            res.plugin(timestamps, {
-                created: "createdAt",
-                lastUpdated: "updatedAt"
+            server.app.use(function (err, req, res, next) {
+                console.error(err.stack);
+                res.send(500, 'Something broke!');
             });
-
-            exports.schemas[name] = res;
-
-            return res;
-        };
-
-        exports.declareModel = function(name, schema) {
-            var res = mongoose.model(name, schema);
-
-            exports.models[name] = res;
-
-            return res;
         };
     });
 
-})();
+}());

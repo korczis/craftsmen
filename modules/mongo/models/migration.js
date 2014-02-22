@@ -23,43 +23,34 @@
 
     var define = require('amdefine')(module);
 
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
     var deps = [
-        '../core',
-        'deferred',
-        'request',
+        '../model',
+        'events',
         'util'
     ];
 
-    define(deps, function(Core, deferred, request, util) {
-        var exports = module.exports = function Scraper(resolver) {
-            Scraper.super_.call(this, resolver);
+    define(deps, function(Model, events, util) {
+        var schema = Model.declareSchema("Migration", {
+            name: String
+        });
 
-            this.mongo = resolver.get('mongo');
+        var model = Model.declareModel("Migration", schema);
+
+        var exports = module.exports = function Migration() {
+            Migration.super_.call(this, schema, model);
+
+            return this;
         };
 
-        util.inherits(exports, Core);
+        util.inherits(exports, Model);
 
-        exports.prototype.mongo = null;
+        exports.Schema = schema;
 
-        exports.deferredRequest = function (url) {
-            var d = deferred();
-
-            request(url, function (err, resp, body) {
-                if (err) {
-                    d.reject(new Error("Unable to fetch '" + url + "', reason: " + err));
-                    return;
-                }
-
-                if (resp.statusCode !== 200) {
-                    d.reject(new Error("Unable to fetch '" + url + "', code: " + resp.statusCode));
-                    return;
-                }
-
-                d.resolve(body);
-            });
-
-            return d.promise();
-        };
+        exports.Model = model;
     });
 
-}());
+})();

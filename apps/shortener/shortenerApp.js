@@ -23,11 +23,27 @@
 
     var define = require('amdefine')(module);
 
+    var requirejs = require('requirejs');
+    requirejs.config(require('../../require.js'));
+
     var deps = [
-        "./scraper"
+        '../../modules/webapp',
+        'deferred',
+        'dependable',
+        'util'
     ];
 
-    define(deps, function (Scraper) {
-        var exports = module.exports = Scraper;
+    define(deps, function (Webapp, deferred, dependable, util) {
+        ///*
+        var resolver = dependable.container();
+
+        // Load app module
+        var exports = module.exports = function UrlShortenerApp(resolver) {
+            UrlShortenerApp.super_.call(this, resolver);
+        };
+
+        util.inherits(exports, Webapp);
+
+        //*/
     });
 }());

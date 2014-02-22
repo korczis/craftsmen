@@ -23,6 +23,10 @@
 
     var define = require('amdefine')(module);
 
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
     var deps = [
         'archy',
         'deferred',
@@ -80,9 +84,7 @@
             if (prop.length > 1) {
                 var e = prop.shift();
                 module.exports.setObjectProperty(obj[e] =
-                    Object.prototype.toString.call(obj[e]) === "[object Object]"
-                        ? obj[e]
-                        : {},
+                    Object.prototype.toString.call(obj[e]) === "[object Object]" ? obj[e] : {},
                     prop,
                     value);
             } else {
@@ -191,6 +193,14 @@
             }
 
             return (orig, override);
+        };
+
+        /**
+         * Gets user home directory in platform agnostic way
+         * @returns {*} Returns path to user directory
+         */
+        exports.getUserHome = function() {
+            return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
         };
 
     });

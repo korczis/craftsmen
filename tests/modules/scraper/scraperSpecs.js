@@ -26,7 +26,7 @@
     var deps = [
         "../../../tests/resolver",
         "../../../modules/mongo",
-        "../../../modules/scrapper",
+        "../../../modules/scraper",
         'chai',
         'dependable',
         'path',
@@ -39,7 +39,7 @@
         var expect = chai.expect;
         var scraper = null;
 
-        describe('Module Scrapper', function () {
+        describe('Scraper Module', function () {
             beforeEach(function() {
                 var rslvr = resolver();
 

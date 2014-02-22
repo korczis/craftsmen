@@ -23,6 +23,10 @@
 
     var define = require('amdefine')(module);
 
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
     var deps = [
         '../core',
         'deferred',
@@ -54,14 +58,14 @@
         util.inherits(exports, Core);
 
         /**
-         * Config to be used
-         * @type {object}
+         * Configuration
+         * @type {Config}
          */
         exports.prototype.config = null;
 
         /**
          * Logger
-         * @type {object}
+         * @type {Logger}
          */
         exports.prototype.logger = null;
 
@@ -182,7 +186,7 @@
 
                 files.forEach(function (file) {
                     var parts = file.split(".");
-                    if(parts.length == 2 && parts[1].toLowerCase() == "js") {
+                    if(parts.length === 2 && parts[1].toLowerCase() === "js") {
                         var fullPath = modelsDir + '/' + file;
 
                         var relPath = path.relative(__dirname, fullPath);
@@ -206,8 +210,11 @@
             return d.promise();
         };
 
-        exports.prototype.initializeModels = function () {
-            var modelsDir = path.join(__dirname, "models");
+        exports.prototype.initializeModels = function (dirname) {
+            if(!dirname) {
+                dirname = __dirname;
+            }
+            var modelsDir = path.join(dirname, "models");
             return this.initializeModelsDir(modelsDir);
         };
 
@@ -226,17 +233,16 @@
             }
         };
 
-        exports.prototype.initializeMigrations = function () {
+        exports.prototype.initializeMigrationsDir = function (migrationsDir) {
             var d = deferred();
 
             var self = this;
-            var migrationsDir = path.join(__dirname, "migrations");
             fs.readdir(migrationsDir, function (err, files) {
                 var res = {};
 
                 files.forEach(function (file) {
                     var parts = file.split(".");
-                    if(parts.length == 2 && parts[1].toLowerCase() == "js") {
+                    if(parts.length === 2 && parts[1].toLowerCase() === "js") {
                         var fullPath = migrationsDir + '/' + file;
 
                         var relPath = path.relative(__dirname, fullPath);
@@ -256,6 +262,14 @@
             });
 
             return d.promise();
+        };
+
+        exports.prototype.initializeMigrations = function (dirname) {
+            if(!dirname) {
+                dirname = __dirname;
+            }
+            var migrationsDir = path.join(dirname, "migrations");
+            return this.initializeMigrationsDir(migrationsDir);
         };
 
         /**

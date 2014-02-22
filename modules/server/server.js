@@ -23,22 +23,22 @@
 
     var define = require('amdefine')(module);
 
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
     var deps = [
         '../core',
         '../utils',
-        'connect-mongo',
         'deferred',
-        'express3-handlebars',
         'express',
-        'gzippo',
+        'fs',
         'http',
         'path',
         'util'
     ];
 
-    define(deps, function(Core, Utils, Cm, deferred, exphbs, express, gzippo, http, path, util) {
-        var MongoStore = Cm(express);
-
+    define(deps, function(Core, Utils, deferred, express, fs, http, path, util) {
         var exports = module.exports = function ServerModule(resolver) {
             ServerModule.super_.call(this, resolver);
 
@@ -48,7 +48,15 @@
 
             this.mongo = this.resolver.get('mongo');
 
-            var modelsDir = path.join(__dirname, "models");
+            // this.auth = this.resolver.get('auth');
+
+            // Set controllers set to empty
+            this.controllers = {};
+
+            // Set feautres set to empty
+            this.features = {};
+
+            var modelsDir = path.join(__dirname, "mongo/models");
             this.mongo.initializeModelsDir(modelsDir);
         };
 
@@ -66,22 +74,38 @@
         exports.prototype.server = null;
 
         /**
-         * Loaded config
-         * @type {object}
+         * Auth module instance
+         * @type {Auth}
+         */
+        exports.prototype.auth = null;
+
+        /**
+         * Config module instance
+         * @type {Config}
          */
         exports.prototype.config = null;
 
         /**
-         * Logger
-         * @type {object}
+         * Logger module instance
+         * @type {Logger}
          */
         exports.prototype.logger = null;
 
         /**
-         * Mongo wrapper
-         * @type {null}
+         * Mongo module instance
+         * @type {Mongo}
          */
         exports.prototype.mongo = null;
+
+        /**
+         * Router feature instance
+         * @type {FeatureRouter}
+         */
+        exports.prototype.mongo = null;
+
+        exports.prototype.controllers = null;
+
+        exports.prototype.featues = null;
 
         /**
          * Initializes Microscratch application
@@ -112,32 +136,32 @@
          * Microscratch application entry-point
          */
         exports.prototype.setup = function () {
-            this.app.set('view engine', 'hbs');
-            this.app.set('views', this.config.server.dirs.views);
-            this.app.set('layout', 'layout');
-            // this.app.enable('view cache');
-            this.app.engine('hbs', exphbs());
+            // Initialize views
+            this.initFeature('./features/views');
 
             this.app.use(express.bodyParser());
             this.app.use(express.methodOverride());
 
-            var self = this;
-            this.app.use(function (req, res, next) {
-                var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-                var ts = Utils.timestamp();
+            // Initialize router
+            // TODO: Split into constructor and init!
+            var res = this.features.router = this.initFeature('./features/router');
 
-                // TODO: use some templating, DRY!
-                self.logger.log("[" + ts + "] " + ip + " " + req.method + " " + req.url);
-                next(); // Passing the request to the next handler in the stack.
-            });
-            this.app.use(this.app.router);
+            // Initialize logger
+            this.features.logger = this.initFeature('./features/logger');
 
             // Initialize sessions
-            this.initSessions();
+            this.features.sessions = this.initFeature('./features/sessions');
 
             // Initialize gzip
-            this.initGzip();
+            this.features.gzip = this.initFeature('./features/gzip');
 
+            // Initialize auth feature if enabled
+            var auth = this.config.server.authentication;
+            if(auth && auth.enabled) {
+                this.features.auth  = this.initFeature('./features/auth');
+            }
+
+            // TODO: Preprocess generated client config somewhere else
             // Preprocess config template
             Utils.preprocessFile(this.config.client.configTemplate,
                 this.config.client.configDestination,
@@ -145,8 +169,7 @@
                     '"$app$"': JSON.stringify(this.config.app)
                 });
 
-            var router = require('./router.js');
-            return router.initialize(this, this.app);
+            return res;
         };
 
         /**
@@ -157,35 +180,10 @@
             this.logger.log('Listening on port ' + this.config.server.port);
         };
 
-        exports.prototype.initSessions = function() {
-            this.app.cookieParser = express.cookieParser(this.config.server.session.secret);
-            this.app.use(this.app.cookieParser);
-
-            this.app.sessionStore = new MongoStore({ // jshint ignore:line
-                url: this.config.mongo.uri,
-                collection: 'Session',
-                auto_reconnect: true
-            });
-
-            this.app.use(express.session({
-                secret: this.config.server.session.secret,
-                store: this.app.sessionStore
-            }));
-        };
-
-        exports.prototype.initGzip = function() {
-            // Gzipped serving of static content if needed
-            if (this.config.server.gzip) {
-                this.app.use(gzippo.staticGzip(this.config.server.dirs.public));
-                this.app.use(gzippo.compress());
-            } else {
-                this.app.use(express.static(this.config.server.dirs.public));
-            }
-
-            this.app.use(function (err, req, res, next) {
-                console.error(err.stack);
-                res.send(500, 'Something broke!');
-            });
+        exports.prototype.initFeature = function(path) {
+            var Feature = require(path);
+            var feature = new Feature(this);
+            return feature;
         };
     });
 }());

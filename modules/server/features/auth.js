@@ -23,30 +23,22 @@
 
     var define = require('amdefine')(module);
 
-    var deps = [
-        '../../mongo/model',
-        'events',
-        'util'
-    ];
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
+    var deps = [];
 
-    define(deps, function(Model, events, util) {
-        var schema = Model.declareSchema('Session', {
-            session: String
-        });
-
-        var model = Model.declareModel('Session', schema);
-
-        var exports = module.exports = function Session() {
-            Session.super_.call(this, schema, model);
-
-            return this;
+    define(deps, function() {
+        /**
+         * Authentication Feature
+         * @type {FeatureAuth}
+         */
+        var exports = module.exports = function FeatureAuth(server) {
+            this.config = server.config;
         };
 
-        util.inherits(exports, Model);
-
-        exports.Schema = schema;
-
-        exports.Model = model;
+        exports.prototype.config = null;
     });
 
-})();
+}());

@@ -19,9 +19,12 @@
 // THE SOFTWARE.
 
 (function (global) {
-    require
-    (
-        ["ember", "app", "jquery"], function (Ember, App, $) {
+    var deps = [
+        "ember",
+        "app"
+    ];
+
+    require(deps, function (Ember, App) {
 
             App.SearchInputComponent = Ember.TextField.extend({
                 classNames: ["search-input"],

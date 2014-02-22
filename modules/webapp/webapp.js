@@ -23,6 +23,10 @@
 
     var define = require('amdefine')(module);
 
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
     var deps = [
         '../core',
         '../server',
@@ -58,7 +62,7 @@
         exports.prototype.parseCliOptions = function () {
             var argv = this.cli.args().argv;
 
-            var opts = argv["o"] || argv["option"];
+            var opts = argv.o || argv.option;
             if (opts) {
                 if (Object.prototype.toString.call(opts) !== '[object Array]') {
                     opts = [opts];
@@ -82,6 +86,6 @@
             }).done(function (res) {
                 self.server.main();
             });
-        }
+        };
     });
 }());

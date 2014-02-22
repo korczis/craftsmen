@@ -23,21 +23,25 @@
 
     var define = require('amdefine')(module);
 
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
     var deps = [
         '../../mongo/model',
         'events',
         'util'
     ];
 
-    define(deps, function(Model, events, util) {
-        var schema = Model.declareSchema("Migration", {
+    define(deps, function (Model, events, util) {
+        var schema = Model.declareSchema('Role', {
             name: String
         });
 
-        var model = Model.declareModel("Migration", schema);
+        var model = Model.declareModel('Role', schema);
 
-        var exports = module.exports = function Migration() {
-            Migration.super_.call(this, schema, model);
+        var exports = module.exports = function Role() {
+            Role.super_.call(this, schema, model);
 
             return this;
         };

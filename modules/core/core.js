@@ -23,6 +23,10 @@
 
     var define = require('amdefine')(module);
 
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
     var deps = [
         'dependable',
         'events',
@@ -40,7 +44,7 @@
             if(resolver) {
                 this.resolver = resolver;
             } else {
-                this.resolver = dependable.container()
+                this.resolver = dependable.container();
             }
         };
 

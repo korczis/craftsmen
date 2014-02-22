@@ -23,6 +23,10 @@
 
     var define = require('amdefine')(module);
 
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
     var deps = [
         'events',
         'mongoose',
@@ -38,6 +42,10 @@
 
         util.inherits(exports, events.EventEmitter);
 
+        exports.schemas = {};
+
+        exports.models = {};
+
         exports.prototype.schema = null;
 
         exports.prototype.model = null;
@@ -52,18 +60,24 @@
             /**
              * Client Schema
              */
-            var objectSchema = new  mongoose.Schema(schema, { collection: name });
+            var res = new  mongoose.Schema(schema, { collection: name });
 
-            objectSchema.plugin(timestamps, {
+            res.plugin(timestamps, {
                 created: "createdAt",
                 lastUpdated: "updatedAt"
             });
 
-            return objectSchema;
+            exports.schemas[name] = res;
+
+            return res;
         };
 
         exports.declareModel = function(name, schema) {
-            return mongoose.model(name, schema);
+            var res = mongoose.model(name, schema);
+
+            exports.models[name] = res;
+
+            return res;
         };
     });
 

@@ -23,13 +23,17 @@
 
     var define = require('amdefine')(module);
 
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
     var deps = [
         'connect-mongo',
         'express'
     ];
 
-    define(deps, function(Cm, express) {
-        var MongoStore = Cm(express);
+    define(deps, function(connectMongo, express) {
+        var MongoStore = connectMongo(express);
 
         function FeatureSessions(server) {
             server.app.cookieParser = express.cookieParser(server.config.server.session.secret);
@@ -38,14 +42,15 @@
             server.app.sessionStore = new MongoStore({ // jshint ignore:line
                 url: server.config.mongo.uri,
                 collection: 'Session',
-                auto_reconnect: true
+                auto_reconnect: true,
+                stringify: false
             });
 
             server.app.use(express.session({
                 secret: server.config.server.session.secret,
                 store: server.app.sessionStore
             }));
-        };
+        }
 
         module.exports = FeatureSessions;
     });

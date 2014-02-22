@@ -19,7 +19,20 @@
 // THE SOFTWARE.
 
 (function (global) {
-    define(["config", "jquery", "bootstrap", "handlebars", "ember", "ember-data", "socketio", "google-analytics", "exports"], function (config, $, bootstrap, handlebars, Ember, data, io, ga, exports) {
+
+    var deps = [
+        "config",
+        "jquery",
+        "bootstrap",
+        "handlebars",
+        "ember",
+        "ember-data",
+        "socketio",
+        "google-analytics",
+        "exports"
+    ];
+
+    define(deps, function (config, $, bootstrap, handlebars, Ember, data, io, ga, exports) {
         var App = window.App = Ember.Application.create({
             options: {},
 
@@ -31,16 +44,16 @@
 
             config: config,
 
-           trackPageView: function(page) {
-               if (!page) {
-                   var loc = window.location;
-                   page = loc.hash ? loc.hash.substring(1) : loc.pathname + loc.search;
-               }
+            trackPageView: function (page) {
+                if (!page) {
+                    var loc = window.location;
+                    page = loc.hash ? loc.hash.substring(1) : loc.pathname + loc.search;
+                }
 
-               ga('send', 'pageview', page);
+                ga('send', 'pageview', page);
             },
 
-            trackEvent: function(category, action) {
+            trackEvent: function (category, action) {
                 ga('send', 'event', category, action);
             },
 
@@ -60,8 +73,8 @@
         Ember.Application.initializer({
             name: "googleAnalytics",
 
-            initialize: function(container, application) {
-                if(!App.config.app.googleAnalytics.enabled) {
+            initialize: function (container, application) {
+                if (!App.config.app.googleAnalytics.enabled) {
                     return;
                 }
 
@@ -70,11 +83,12 @@
                 application.trackTiming("webapp", "initialise");
 
                 var router = container.lookup('router:main');
-                router.on('didTransition', function() {
+                router.on('didTransition', function () {
                     var url = this.get('url');
-                    if(!url || url == "") {
+                    if (!url || url == "") {
                         url = "/";
-                    };
+                    }
+                    ;
 
                     application.trackPageView(url);
                 });

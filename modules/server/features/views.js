@@ -23,6 +23,10 @@
 
     var define = require('amdefine')(module);
 
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
     var deps = [
         'express3-handlebars'
     ];
@@ -34,7 +38,7 @@
             server.app.set('layout', 'layout');
             // this.app.enable('view cache');
             server.app.engine('hbs', exphbs());
-        };
+        }
 
         module.exports = FeatureViews;
     });

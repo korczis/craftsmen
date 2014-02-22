@@ -23,64 +23,112 @@
 
     var path = require('path');
 
+    /**
+     * Application settings
+     * @type {{name: string, googleAnalytics: {enabled: boolean, id: string, host: string}}}
+     */
+    var app = {
+        name: "Craftsmen",
+
+        // You can override default route here
+        // indexRoute: "admin",
+
+        // Google analytics section
+        googleAnalytics: {
+            enabled: true,
+            id: 'UA-47699219-2',
+            host: 'craftsmen.apollocrawler.com'
+        }
+    };
+
+    /**
+     * Client Settings
+     * @type {{configTemplate: *, configDestination: *}}
+     */
+    var client = {
+        configTemplate: path.join(__dirname, "public/js/config.template.js"),
+        configDestination: path.join(__dirname, "public/js/config.js")
+    };
+
+    /**
+     * Mongo settings
+     * @type {{uri: string, watcher: boolean}}
+     */
+    var mongo = {
+        uri: "mongodb://localhost:27017/" + app.name,
+        watcher: false
+    };
+
+    /**
+     * Server settings
+     * @type {{port: number, root: *, dirs: {public: *, views: *}, gzip: boolean, session: {secret: string}, authentication: {enabled: boolean}}}
+     */
+    var server = {
+        port: 8888,
+        root: __dirname,
+        dirs: {
+            public: path.join(__dirname, "public"),
+            views: path.join(__dirname, "modules/server/views")
+        },
+        gzip: false,
+
+        session: {
+            secret: "This is cookie secret, change this!"
+        },
+
+        authentication: {
+            enabled: true
+        }
+    };
+
+    /**
+     * Solr settings
+     * @type {{enabled: boolean, uri: string}}
+     */
+    var solr = {
+        enabled: true,
+        uri: "http://apollocrawler.com:8080/solr/apollo"
+    };
+
     module.exports = {
 
         _global: {
             verbose: true,
 
-            app: {
-                name: "Craftsmen",
+            app: app,
 
-                // Google analytics section
-                googleAnalytics: {
-                    enabled: true,
-                    id: 'UA-47699219-2',
-                    host: 'craftsmen.apollocrawler.com'
-                }
-            },
+            client: client,
 
-            client: {
-                configTemplate: path.join(__dirname, "public/js/config.template.js"),
-                configDestination: path.join(__dirname, "public/js/config.js")
-            },
+            mongo: mongo,
 
-            mongo: {
-                uri: "mongodb://localhost:27017/apollo",
-                watcher: false
-            },
+            server: server,
 
-            server: {
-                port: 8888,
-                root: __dirname,
-                dirs: {
-                    public: path.join(__dirname, "public"),
-                    views: path.join(__dirname, "public/views")
-                },
-                gzip: false,
-
-                session: {
-                    secret: "This is cookie secret, change this!"
-                }
-    
-            },
-
-            solr: {
-                enabled: true,
-                uri: "http://apollocrawler.com:8080/solr/apollo"
-            }
+            solr: solr
         },
 
         local: {
+            mongo: {
+                uri: "mongodb://localhost:27017/apollo",
+            }
         },
 
         development: {
+            mongo: {
+                uri: "mongodb://localhost:27017/apollo",
+            }
         },
 
         test: {
+            mongo: {
+                uri: "mongodb://localhost:27017/apollo",
+            }
         },
 
         production: {
-            verbose: false
+            verbose: false,
+            mongo: {
+                uri: mongo.uri + "-production"
+            }
         }
     };
 

@@ -23,17 +23,22 @@
 
     var define = require('amdefine')(module);
 
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
     var deps = [
         '../core',
         '../utils',
         'deferred',
         'express',
+        'fs',
         'http',
         'path',
         'util'
     ];
 
-    define(deps, function(Core, Utils, deferred, express, http, path, util) {
+    define(deps, function(Core, Utils, deferred, express, fs, http, path, util) {
         var exports = module.exports = function ServerModule(resolver) {
             ServerModule.super_.call(this, resolver);
 
@@ -45,7 +50,13 @@
 
             // this.auth = this.resolver.get('auth');
 
-            var modelsDir = path.join(__dirname, "models");
+            // Set controllers set to empty
+            this.controllers = {};
+
+            // Set feautres set to empty
+            this.features = {};
+
+            var modelsDir = path.join(__dirname, "mongo/models");
             this.mongo.initializeModelsDir(modelsDir);
         };
 
@@ -87,6 +98,16 @@
         exports.prototype.mongo = null;
 
         /**
+         * Router feature instance
+         * @type {FeatureRouter}
+         */
+        exports.prototype.mongo = null;
+
+        exports.prototype.controllers = null;
+
+        exports.prototype.featues = null;
+
+        /**
          * Initializes Microscratch application
          * @returns {*} Promise
          */
@@ -122,16 +143,23 @@
             this.app.use(express.methodOverride());
 
             // Initialize router
-            var res = this.initFeature('./features/router');
+            // TODO: Split into constructor and init!
+            var res = this.features.router = this.initFeature('./features/router');
 
             // Initialize logger
-            this.initFeature('./features/logger');
+            this.features.logger = this.initFeature('./features/logger');
 
             // Initialize sessions
-            this.initFeature('./features/sessions');
+            this.features.sessions = this.initFeature('./features/sessions');
 
             // Initialize gzip
-            this.initFeature('./features/gzip');
+            this.features.gzip = this.initFeature('./features/gzip');
+
+            // Initialize auth feature if enabled
+            var auth = this.config.server.authentication;
+            if(auth && auth.enabled) {
+                this.features.auth  = this.initFeature('./features/auth');
+            }
 
             // TODO: Preprocess generated client config somewhere else
             // Preprocess config template

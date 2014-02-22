@@ -18,20 +18,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 (function () {
     'use strict';
 
-    var exports = module.exports = function (microscratch, app) {
+    var define = require('amdefine')(module);
 
-        // Microscratch route
-        app.get('/microscratch', function (req, res) {
-            var data = {
-                app: microscratch.config.app
-            };
+    /**
+     * Array of modules this one depends on.
+     * @type {Array}
+     */
+    var deps = [
+        '../controller',
+        'fs',
+        'path',
+        'util'
+    ];
 
-            res.render("microscratch", data);
-        });
-    };
+    define(deps, function(Controller, fs, path, util) {
+        var exports = module.exports = function HelloController(server) {
+            HelloController.super_.call(this, server);
+
+            return this;
+        };
+
+        util.inherits(exports, Controller);
+
+        exports.prototype.server = null;
+
+        exports.prototype.init = function() {
+            var server = this.server;
+            var app = server.app;
+
+            app.get('/hello', function (req, res) {
+                var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+                res.send('Hello ' + ip + '! ');
+            });
+        };
+
+    });
 
 }());

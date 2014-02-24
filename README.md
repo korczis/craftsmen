@@ -13,6 +13,7 @@ Simple Craftsmen Listing based on top of microscratch
 [![Dependency Status](https://gemnasium.com/ApolloCrawler/craftsmen.png)](https://gemnasium.com/ApolloCrawler/craftsmen)
 [![Code Climate](https://codeclimate.com/repos/52eeccb869568029a80003ff/badges/3fd9b15792ebb7277355/gpa.png)](https://codeclimate.com/repos/52eeccb869568029a80003ff/feed)
 [![Total views](https://sourcegraph.com/api/repos/github.com/ApolloCrawler/craftsmen/counters/views.png)](https://sourcegraph.com/github.com/ApolloCrawler/craftsmen) 
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ApolloCrawler/microscratch/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 ### Uptime
 
